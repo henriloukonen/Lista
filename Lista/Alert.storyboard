@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Alert View Controller-->
+        <scene sceneID="XBJ-Xq-Rjc">
+            <objects>
+                <viewController storyboardIdentifier="AlertVC" modalPresentationStyle="overFullScreen" id="2L2-ZE-H8Y" customClass="AlertViewController" customModule="Lista" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Sf5-dz-eA6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acd-yZ-1bl">
+                                <rect key="frame" x="6" y="388" width="402" height="508"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="mgP-Px-H7q">
+                                        <rect key="frame" x="8" y="10" width="386" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ntq-nZ-LFK">
+                                                <rect key="frame" x="0.0" y="0.0" width="192" height="30"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Close">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="cancel:" destination="2L2-ZE-H8Y" eventType="touchUpInside" id="cEv-SF-Tii"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhf-uu-FC7">
+                                                <rect key="frame" x="194" y="0.0" width="192" height="30"/>
+                                                <color key="backgroundColor" red="0.2793500417" green="0.89113711890000002" blue="0.9727355647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Action">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="addAction:" destination="2L2-ZE-H8Y" eventType="touchUpInside" id="B8e-eM-fPI"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Item name..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HsP-oh-L9T">
+                                        <rect key="frame" x="8" y="57" width="386" height="30"/>
+                                        <color key="backgroundColor" red="0.35709478873365547" green="0.3633644507478897" blue="0.39257910772023463" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="HsP-oh-L9T" secondAttribute="trailing" id="Aqk-Cg-Snw"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="mgP-Px-H7q" secondAttribute="trailing" id="M2A-fO-dwU"/>
+                                    <constraint firstItem="HsP-oh-L9T" firstAttribute="leading" secondItem="acd-yZ-1bl" secondAttribute="leadingMargin" id="aVJ-dI-Qge"/>
+                                    <constraint firstItem="mgP-Px-H7q" firstAttribute="leading" secondItem="acd-yZ-1bl" secondAttribute="leadingMargin" id="bnX-fC-OGv"/>
+                                    <constraint firstItem="HsP-oh-L9T" firstAttribute="top" secondItem="mgP-Px-H7q" secondAttribute="bottom" constant="17" id="cyN-LK-wYt"/>
+                                    <constraint firstItem="mgP-Px-H7q" firstAttribute="top" secondItem="acd-yZ-1bl" secondAttribute="topMargin" constant="2" id="nhf-92-f4v"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="acd-yZ-1bl" secondAttribute="bottom" id="BEJ-rM-s7n"/>
+                            <constraint firstItem="acd-yZ-1bl" firstAttribute="top" secondItem="n9N-p7-Ffd" secondAttribute="top" constant="344" id="K2K-23-ZOh"/>
+                            <constraint firstItem="n9N-p7-Ffd" firstAttribute="trailing" secondItem="acd-yZ-1bl" secondAttribute="trailing" constant="6" id="Y0m-yT-QXn"/>
+                            <constraint firstItem="acd-yZ-1bl" firstAttribute="leading" secondItem="n9N-p7-Ffd" secondAttribute="leading" constant="6" id="pFs-6y-qdc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="n9N-p7-Ffd"/>
+                    </view>
+                    <connections>
+                        <outlet property="actionButton" destination="mhf-uu-FC7" id="OxZ-0M-0Di"/>
+                        <outlet property="backgroundView" destination="acd-yZ-1bl" id="jYu-Rg-NsQ"/>
+                        <outlet property="cancelButton" destination="Ntq-nZ-LFK" id="6d9-Cf-8Mz"/>
+                        <outlet property="itemTextField" destination="HsP-oh-L9T" id="bdy-nw-u83"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fCA-0I-MJ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="128.98550724637681" y="139.95535714285714"/>
+        </scene>
+    </scenes>
+</document>

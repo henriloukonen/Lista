@@ -14,6 +14,7 @@ class ItemTableViewCell: UITableViewCell {
     
     func configureCell(using list: List) {
         itemLabel?.text = list.item
+        
     }
 
 }

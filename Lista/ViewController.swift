@@ -13,6 +13,8 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var isEmptyLabel: UILabel!
+    @IBOutlet var noItemsView: UIView!
+    @IBOutlet var addItemView: UIView!
     
     private var itemPredicate: NSPredicate?
     private var fetchedResultsController: NSFetchedResultsController<List>!
@@ -36,7 +38,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
             let sortByDate = NSSortDescriptor(key: ListKeys.date, ascending: false)
             request.sortDescriptors = [sortByDate]
         
-            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: coreData.persistentContainer.viewContext, sectionNameKeyPath: ListKeys.category, cacheName: nil)
+            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: coreData.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
             fetchedResultsController.delegate = self
         }
         
@@ -49,6 +51,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
             print("fetch failed")
         }
     }
+    
     func save(itemName: String) {
         let currentDate = Date()
         let entity = NSEntityDescription.entity(forEntityName: ListKeys.listName, in: coreData.persistentContainer.viewContext)!
@@ -61,26 +64,33 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         coreData.saveContext()
     }
     
-    
-    @IBAction func addItem(_ sender: Any) {
-        let alert = UIAlertController(title: "New Item", message: "Add a new item", preferredStyle: .alert)
-        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] action in
-            
-            guard let textField = alert.textFields?.first, let nameToSave = textField.text else {
-                return
+    @IBAction func unwindFromAddItemVC(_ sender: UIStoryboardSegue) {
+        if sender.source is AddItemViewController {
+            if let senderVC = sender.source as? AddItemViewController {
+                save(itemName: senderVC.itemName)
             }
-            self.save(itemName: nameToSave)
         }
-        
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addTextField()
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true)
     }
+    
+//
+//        let alert = UIAlertController(title: "New Item", message: "Add a new item", preferredStyle: .alert)
+//        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] action in
+//
+//            guard let textField = alert.textFields?.first, let nameToSave = textField.text else {
+//                return
+//            }
+//            self.save(itemName: nameToSave)
+//        }
+//
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+//
+//        alert.addTextField()
+//        alert.addAction(saveAction)
+//        alert.addAction(cancelAction)
+//
+//        present(alert, animated: true)
+    
     
 }
 extension ViewController: UITableViewDataSource {
@@ -119,6 +129,14 @@ extension ViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
+        if sectionInfo.numberOfObjects == 0 {
+            tableView.backgroundView = noItemsView
+            tableView.separatorStyle = .none
+          
+        } else {
+            tableView.backgroundView = nil
+            tableView.separatorStyle = .singleLine
+        }
         return sectionInfo.numberOfObjects
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
