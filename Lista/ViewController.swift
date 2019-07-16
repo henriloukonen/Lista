@@ -14,7 +14,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var isEmptyLabel: UILabel!
     @IBOutlet var noItemsView: UIView!
-    @IBOutlet var addItemView: UIView!
+    @IBOutlet var selectButton: UIBarButtonItem!
     
     private var itemPredicate: NSPredicate?
     private var fetchedResultsController: NSFetchedResultsController<List>!
@@ -52,46 +52,29 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         }
     }
     
-    func save(itemName: String) {
+    @IBAction func selectItems(_ sender: Any) {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+        selectButton.title? = tableView.isEditing ? "Done" : "Edit"
+    }
+    
+    func save(with name: String, category: String) {
         let currentDate = Date()
         let entity = NSEntityDescription.entity(forEntityName: ListKeys.listName, in: coreData.persistentContainer.viewContext)!
         let item = NSManagedObject(entity: entity, insertInto: coreData.persistentContainer.viewContext)
         
-        //item.setValue(Category, forKey: ListKey.category)
-        item.setValue(itemName, forKey: ListKeys.itemName)
+        item.setValue(name, forKey: ListKeys.itemName)
         item.setValue(currentDate, forKey: ListKeys.date)
-        item.setValue("Ruoka", forKey: ListKeys.category)
+        item.setValue(category, forKey: ListKeys.category)
         coreData.saveContext()
     }
     
     @IBAction func unwindFromAddItemVC(_ sender: UIStoryboardSegue) {
         if sender.source is AddItemViewController {
             if let senderVC = sender.source as? AddItemViewController {
-                save(itemName: senderVC.itemName)
+                save(with: senderVC.itemName, category: senderVC.category)
             }
         }
     }
-    
-//
-//        let alert = UIAlertController(title: "New Item", message: "Add a new item", preferredStyle: .alert)
-//        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] action in
-//
-//            guard let textField = alert.textFields?.first, let nameToSave = textField.text else {
-//                return
-//            }
-//            self.save(itemName: nameToSave)
-//        }
-//
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-//
-//        alert.addTextField()
-//        alert.addAction(saveAction)
-//        alert.addAction(cancelAction)
-//
-//        present(alert, animated: true)
-    
-    
 }
 extension ViewController: UITableViewDataSource {
 //    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

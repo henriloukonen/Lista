@@ -14,17 +14,21 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var amountTextField: UITextField!
     
     var itemName: String!
+    var category: String!
     var amountOfItems: Int!
     
     let done: UIBarButtonItem = UIBarButtonItem(title: "Add", style: .done, target: self, action: #selector(doneButtonAction))
     let amount: UIBarButtonItem = UIBarButtonItem(title: "Amount", style: .plain, target: self, action: #selector(addAmount))
-    let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    let items = [amount, flexSpace, done]
+    
+    let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+    
     
     override func viewDidLoad() {
         title = "Add Item"
         navigationController?.navigationItem.largeTitleDisplayMode = .never
+        
+        let items = [amount, flexSpace, done]
         
         newItemTextField.layer.cornerRadius = 3
         amountTextField.layer.cornerRadius = 6
@@ -39,6 +43,12 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         
         newItemTextField.inputAccessoryView = doneToolbar
         amountTextField.inputAccessoryView = doneToolbar
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        doneButtonAction()
+        return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
@@ -57,13 +67,10 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         } else {
             done.isEnabled = true
         }
-        
-        
         return true
-        
-        
     }
 
+    
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
         newItemTextField.resignFirstResponder()
@@ -75,6 +82,7 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
             return
         }
         itemName = text
+        category = "testi"
     }
     
     @objc func addAmount() {
