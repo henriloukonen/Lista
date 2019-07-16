@@ -146,15 +146,26 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="doneAccessory" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="yr4-jc-gGi" id="kMs-tZ-fxd"/>
                                 </connections>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmp-Ak-2rW">
+                                <rect key="frame" x="6" y="190" width="67" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Yho-ug-2kg" firstAttribute="leading" secondItem="KEV-oR-C7Y" secondAttribute="leading" id="cHe-Rg-uhg"/>
+                            <constraint firstItem="nmp-Ak-2rW" firstAttribute="leading" secondItem="KEV-oR-C7Y" secondAttribute="leading" constant="6" id="ex5-ws-4YO"/>
+                            <constraint firstItem="nmp-Ak-2rW" firstAttribute="top" secondItem="Yho-ug-2kg" secondAttribute="bottom" constant="15" id="hrN-rK-JoD"/>
                             <constraint firstItem="Yho-ug-2kg" firstAttribute="top" secondItem="KEV-oR-C7Y" secondAttribute="top" constant="37" id="uKE-WS-CFU"/>
                             <constraint firstItem="KEV-oR-C7Y" firstAttribute="trailing" secondItem="Yho-ug-2kg" secondAttribute="trailing" id="xFJ-rI-ZzD"/>
                         </constraints>
@@ -166,15 +177,10 @@
                                 <action selector="closeVC:" destination="yr4-jc-gGi" id="q5d-Cl-d4C"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Add" style="done" id="58v-sS-XP9">
-                            <connections>
-                                <segue destination="1Qj-my-beM" kind="unwind" unwindAction="unwindFromAddItemVC:" id="Ndf-wg-xNQ"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addButton" destination="58v-sS-XP9" id="vMJ-uy-IHT"/>
                         <outlet property="newItemTextField" destination="Yho-ug-2kg" id="OWO-XH-QaT"/>
+                        <segue destination="1Qj-my-beM" kind="unwind" identifier="unwindAddItemVC" unwindAction="unwindFromAddItemVC:" id="8u0-yh-2CT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ENU-AY-D3n" userLabel="First Responder" sceneMemberID="firstResponder"/>

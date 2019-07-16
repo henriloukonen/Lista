@@ -155,8 +155,14 @@ extension ViewController: UITableViewDataSource {
             self.coreData.persistentContainer.viewContext.delete(item)
             self.coreData.saveContext()
         }
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (contextualAction, view, boolValue) in
+            boolValue(true)
+            let editItem = self.fetchedResultsController.object(at: indexPath)
+            
+        }
         
-        let done = UISwipeActionsConfiguration(actions: [delete])
+        let done = UISwipeActionsConfiguration(actions: [delete, edit])
+        edit.backgroundColor = Color.cyan
         
         return done
     }
