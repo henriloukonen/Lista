@@ -139,7 +139,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Item name" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Yho-ug-2kg">
-                                <rect key="frame" x="0.0" y="125" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="125" width="316" height="50"/>
                                 <color key="backgroundColor" red="0.95181630710659904" green="0.95060735211049829" blue="0.92226869025916902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="uws-nd-9X7"/>
@@ -160,14 +160,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gSn-Na-YsW">
+                                <rect key="frame" x="316" y="125" width="59" height="50"/>
+                                <color key="backgroundColor" red="0.89507638324183858" green="0.8962011418971918" blue="0.87655440979135801" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="p06-xj-sJa"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="KEV-oR-C7Y" firstAttribute="trailing" secondItem="gSn-Na-YsW" secondAttribute="trailing" id="0be-NQ-TVj"/>
+                            <constraint firstItem="gSn-Na-YsW" firstAttribute="top" secondItem="KEV-oR-C7Y" secondAttribute="top" constant="37" id="FEr-SX-ncS"/>
                             <constraint firstItem="Yho-ug-2kg" firstAttribute="leading" secondItem="KEV-oR-C7Y" secondAttribute="leading" id="cHe-Rg-uhg"/>
                             <constraint firstItem="nmp-Ak-2rW" firstAttribute="leading" secondItem="KEV-oR-C7Y" secondAttribute="leading" constant="6" id="ex5-ws-4YO"/>
                             <constraint firstItem="nmp-Ak-2rW" firstAttribute="top" secondItem="Yho-ug-2kg" secondAttribute="bottom" constant="15" id="hrN-rK-JoD"/>
+                            <constraint firstItem="gSn-Na-YsW" firstAttribute="leading" secondItem="Yho-ug-2kg" secondAttribute="trailing" id="i6U-L6-doG"/>
                             <constraint firstItem="Yho-ug-2kg" firstAttribute="top" secondItem="KEV-oR-C7Y" secondAttribute="top" constant="37" id="uKE-WS-CFU"/>
-                            <constraint firstItem="KEV-oR-C7Y" firstAttribute="trailing" secondItem="Yho-ug-2kg" secondAttribute="trailing" id="xFJ-rI-ZzD"/>
+                            <constraint firstItem="KEV-oR-C7Y" firstAttribute="trailing" secondItem="Yho-ug-2kg" secondAttribute="trailing" constant="59" id="xFJ-rI-ZzD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KEV-oR-C7Y"/>
                     </view>
@@ -179,6 +192,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="amountTextField" destination="gSn-Na-YsW" id="eHS-9p-6rL"/>
                         <outlet property="newItemTextField" destination="Yho-ug-2kg" id="OWO-XH-QaT"/>
                         <segue destination="1Qj-my-beM" kind="unwind" identifier="unwindAddItemVC" unwindAction="unwindFromAddItemVC:" id="8u0-yh-2CT"/>
                     </connections>
