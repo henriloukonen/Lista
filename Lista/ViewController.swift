@@ -16,6 +16,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBOutlet var noItemsView: UIView!
     @IBOutlet var selectButton: UIBarButtonItem!
     
+    
     private var itemPredicate: NSPredicate?
     private var fetchedResultsController: NSFetchedResultsController<List>!
     
@@ -35,7 +36,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     func loadSavedItems() {
         if fetchedResultsController == nil {
             let request = List.createFetchRequest()
-            let sortByDate = NSSortDescriptor(key: ListKeys.date, ascending: false)
+            let sortByDate = NSSortDescriptor(key: ListKeys.category, ascending: false)
             request.sortDescriptors = [sortByDate]
         
             fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: coreData.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -125,8 +126,9 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemTableViewCell
         let index = fetchedResultsController.object(at: indexPath)
+        let categoryColor = index.category
         
-        cell.configureCell(using: index)
+        cell.configureCell(from: index, with: categoryColor)
         
         return cell
     }

@@ -13,6 +13,7 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var newItemTextField: UITextField!
     @IBOutlet var amountTextField: UITextField!
     
+    
     var itemName: String!
     var category: String!
     var amountOfItems: Int!
@@ -30,8 +31,9 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         
         let items = [amount, flexSpace, done]
         
-        newItemTextField.layer.cornerRadius = 3
-        amountTextField.layer.cornerRadius = 6
+//        newItemTextField.layer.cornerRadius = 10
+//        amountTextField.layer.cornerRadius = 10
+        
         
         newItemTextField.becomeFirstResponder()
         
@@ -82,7 +84,7 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
             return
         }
         itemName = text
-        category = "testi"
+        category = "limeGreen"
     }
     
     @objc func addAmount() {
