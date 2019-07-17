@@ -72,7 +72,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBAction func unwindFromAddItemVC(_ sender: UIStoryboardSegue) {
         if sender.source is AddItemViewController {
             if let senderVC = sender.source as? AddItemViewController {
-                save(with: senderVC.itemName, category: senderVC.category)
+                save(with: senderVC.itemName, category: senderVC.selectedTag)
             }
         }
     }

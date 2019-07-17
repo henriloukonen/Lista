@@ -12,16 +12,22 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var newItemTextField: UITextField!
     @IBOutlet var amountTextField: UITextField!
-    
+    @IBOutlet var categoryBGView: UIView!
+    @IBOutlet var lime: UIButton!
+    @IBOutlet var blue: UIButton!
+    @IBOutlet var purple: UIButton!
+    @IBOutlet var cyan: UIButton!
+    @IBOutlet var noColor: UIButton!
     
     var itemName: String!
-    var category: String!
+    var selectedTag: String!
     var amountOfItems: Int!
+    lazy var tags: [UIButton] = [lime, blue, purple, cyan, noColor]
+    
     
     let done: UIBarButtonItem = UIBarButtonItem(title: "Add", style: .done, target: self, action: #selector(doneButtonAction))
     let amount: UIBarButtonItem = UIBarButtonItem(title: "Amount", style: .plain, target: self, action: #selector(addAmount))
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    
     let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
     
     
@@ -29,25 +35,48 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         title = "Add Item"
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         
-        let items = [amount, flexSpace, done]
-        
-//        newItemTextField.layer.cornerRadius = 10
-//        amountTextField.layer.cornerRadius = 10
-        
-        
-        newItemTextField.becomeFirstResponder()
-        
         done.isEnabled = false
         
+        for button in tags {
+            button.layer.cornerRadius = 5
+            
+        }
+
+        let items = [amount, flexSpace, done]
         doneToolbar.barStyle = .default
         doneToolbar.items = items
         doneToolbar.sizeToFit()
         
+        newItemTextField.becomeFirstResponder()
         newItemTextField.inputAccessoryView = doneToolbar
         amountTextField.inputAccessoryView = doneToolbar
+        categoryBGView.layer.cornerRadius = 10
     }
     
     
+    //MARK: - Gesture regognizers for categories
+    
+    @IBAction func categoryTapped(sender: UIButton) {
+        switch sender {
+        case lime:
+            print("lime")
+            selectedTag = ColorTag.lime
+        case blue:
+            print("blue")
+            selectedTag = ColorTag.blue
+        case purple:
+            selectedTag = ColorTag.purple
+            print("purple")
+        case cyan:
+            selectedTag = ColorTag.cyan
+            print("cyan")
+        default:
+            break
+        }
+    }
+    
+    
+    //MARK: - Textfield handling
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         doneButtonAction()
         return true
@@ -80,11 +109,13 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         guard let text = newItemTextField.text, !text.isEmpty else {
             return
         }
         itemName = text
-        category = "limeGreen"
+         _ = selectedTag
+        
     }
     
     @objc func addAmount() {

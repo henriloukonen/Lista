@@ -19,15 +19,13 @@ class ItemTableViewCell: UITableViewCell {
         itemLabel?.text = list.item
         
         switch categoryColor {
-        case "cyan":
+        case ColorTag.cyan:
             color = Color.cyan
-        case "lightGray":
-            color = Color.lightGray
-        case "limeGreen":
+        case ColorTag.lime:
             color = Color.limeGreen
-        case "blue":
+        case ColorTag.blue:
             color = Color.blue
-        case "purple":
+        case ColorTag.purple:
             color = Color.purple
         default:
             color = nil
