@@ -39,7 +39,6 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         
         for button in tags {
             button.layer.cornerRadius = 5
-            
         }
 
         let items = [amount, flexSpace, done]
@@ -50,6 +49,7 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         newItemTextField.becomeFirstResponder()
         newItemTextField.inputAccessoryView = doneToolbar
         amountTextField.inputAccessoryView = doneToolbar
+        
         categoryBGView.layer.cornerRadius = 10
     }
     
@@ -60,7 +60,7 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         switch sender {
         case lime:
             print("lime")
-            selectedTag = ColorTag.lime
+            selectedTag = ColorTag.limeGreen
         case blue:
             print("blue")
             selectedTag = ColorTag.blue
@@ -88,10 +88,8 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let oldText = newItemTextField.text,
-            let stringRange = Range(range, in: oldText) else {
-                return false
-        }
+        guard let oldText = newItemTextField.text, let stringRange = Range(range, in: oldText) else { return false }
+        
         let newText = oldText.replacingCharacters(in: stringRange, with: string)
         if newText.isEmpty {
             done.isEnabled = false
@@ -109,13 +107,12 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let text = newItemTextField.text, !text.isEmpty else { return }
+        guard let amount = amountTextField.text, !text.isEmpty else { return }
         
-        guard let text = newItemTextField.text, !text.isEmpty else {
-            return
-        }
         itemName = text
-         _ = selectedTag
-        
+        amountOfItems = Int(amount) ?? 1
+        _ = selectedTag
     }
     
     @objc func addAmount() {

@@ -13,13 +13,14 @@ enum ListKeys {
     static let itemName = "item"
     static let date     = "dateAdded"
     static let category = "category"
+    static let amount   = "amount"
 }
 
 enum ColorTag {
-    static let lime   = "lime"
-    static let blue   = "blue"
-    static let purple = "purple"
-    static let cyan   = "cyan"
+    static let limeGreen = "lime"
+    static let blue      = "blue"
+    static let purple    = "purple"
+    static let cyan      = "cyan"
 }
 
 enum Color {

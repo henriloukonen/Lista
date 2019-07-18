@@ -10,18 +10,20 @@ import UIKit
 
 class ItemTableViewCell: UITableViewCell {
 
+    @IBOutlet var amountLabel: UILabel!
     @IBOutlet var itemLabel: UILabel!
     @IBOutlet var categoryView: UIView!
     var color: UIColor!
     
     
-    func configureCell(from list: List, with categoryColor: String) {
+    func configureCell(from list: List, with colorTag: String) {
         itemLabel?.text = list.item
+        amountLabel?.text = (list.amount<=1) ? nil : String(list.amount)
         
-        switch categoryColor {
+        switch colorTag {
         case ColorTag.cyan:
             color = Color.cyan
-        case ColorTag.lime:
+        case ColorTag.limeGreen:
             color = Color.limeGreen
         case ColorTag.blue:
             color = Color.blue
