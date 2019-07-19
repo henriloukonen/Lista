@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB6E5C9C22E0F2BB0046B9A1 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6E5C9A22E0F2BB0046B9A1 /* Tag+CoreDataClass.swift */; };
+		BB6E5C9D22E0F2BB0046B9A1 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6E5C9B22E0F2BB0046B9A1 /* Tag+CoreDataProperties.swift */; };
 		BBEF72BB22E0485A00B76A9C /* List+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF72B922E0485A00B76A9C /* List+CoreDataClass.swift */; };
 		BBEF72BC22E0485A00B76A9C /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF72BA22E0485A00B76A9C /* List+CoreDataProperties.swift */; };
 		BBF692BE22D7D81A00CEA5B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692BD22D7D81A00CEA5B3 /* AppDelegate.swift */; };
@@ -18,12 +20,14 @@
 		BBF692D522D8745900CEA5B3 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692D422D8745900CEA5B3 /* ItemTableViewCell.swift */; };
 		BBF692D722D8756800CEA5B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692D622D8756800CEA5B3 /* Constants.swift */; };
 		BBF692E122D91E2C00CEA5B3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692E022D91E2C00CEA5B3 /* CoreDataManager.swift */; };
-		BBF692EF22DCE58A00CEA5B3 /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692EE22DCE58A00CEA5B3 /* AddItemViewController.swift */; };
+		BBF692EF22DCE58A00CEA5B3 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692EE22DCE58A00CEA5B3 /* ItemViewController.swift */; };
 		BBF692F222DDF31C00CEA5B3 /* Alert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBF692F022DDF31B00CEA5B3 /* Alert.storyboard */; };
 		BBF692F322DDF31C00CEA5B3 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692F122DDF31B00CEA5B3 /* AlertViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB6E5C9A22E0F2BB0046B9A1 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BB6E5C9B22E0F2BB0046B9A1 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BBEF72B922E0485A00B76A9C /* List+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BBEF72BA22E0485A00B76A9C /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BBF692BA22D7D81A00CEA5B3 /* Lista.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lista.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,7 +41,7 @@
 		BBF692D422D8745900CEA5B3 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		BBF692D622D8756800CEA5B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BBF692E022D91E2C00CEA5B3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		BBF692EE22DCE58A00CEA5B3 /* AddItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
+		BBF692EE22DCE58A00CEA5B3 /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
 		BBF692F022DDF31B00CEA5B3 /* Alert.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Alert.storyboard; sourceTree = "<group>"; };
 		BBF692F122DDF31B00CEA5B3 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,7 +80,7 @@
 				BBF692E222D91E9500CEA5B3 /* CoreData */,
 				BBF692D622D8756800CEA5B3 /* Constants.swift */,
 				BBF692BF22D7D81A00CEA5B3 /* ViewController.swift */,
-				BBF692EE22DCE58A00CEA5B3 /* AddItemViewController.swift */,
+				BBF692EE22DCE58A00CEA5B3 /* ItemViewController.swift */,
 				BBF692C122D7D81A00CEA5B3 /* Main.storyboard */,
 				BBF692F022DDF31B00CEA5B3 /* Alert.storyboard */,
 				BBF692F122DDF31B00CEA5B3 /* AlertViewController.swift */,
@@ -91,10 +95,12 @@
 		BBF692E222D91E9500CEA5B3 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				BB6E5C9A22E0F2BB0046B9A1 /* Tag+CoreDataClass.swift */,
+				BB6E5C9B22E0F2BB0046B9A1 /* Tag+CoreDataProperties.swift */,
 				BBEF72B922E0485A00B76A9C /* List+CoreDataClass.swift */,
 				BBEF72BA22E0485A00B76A9C /* List+CoreDataProperties.swift */,
-				BBF692C422D7D81A00CEA5B3 /* Lista.xcdatamodeld */,
 				BBF692E022D91E2C00CEA5B3 /* CoreDataManager.swift */,
+				BBF692C422D7D81A00CEA5B3 /* Lista.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -181,12 +187,14 @@
 			files = (
 				BBF692C022D7D81A00CEA5B3 /* ViewController.swift in Sources */,
 				BBF692C622D7D81A00CEA5B3 /* Lista.xcdatamodeld in Sources */,
+				BB6E5C9D22E0F2BB0046B9A1 /* Tag+CoreDataProperties.swift in Sources */,
 				BBF692F322DDF31C00CEA5B3 /* AlertViewController.swift in Sources */,
 				BBEF72BB22E0485A00B76A9C /* List+CoreDataClass.swift in Sources */,
 				BBF692D522D8745900CEA5B3 /* ItemTableViewCell.swift in Sources */,
-				BBF692EF22DCE58A00CEA5B3 /* AddItemViewController.swift in Sources */,
+				BBF692EF22DCE58A00CEA5B3 /* ItemViewController.swift in Sources */,
 				BBEF72BC22E0485A00B76A9C /* List+CoreDataProperties.swift in Sources */,
 				BBF692BE22D7D81A00CEA5B3 /* AppDelegate.swift in Sources */,
+				BB6E5C9C22E0F2BB0046B9A1 /* Tag+CoreDataClass.swift in Sources */,
 				BBF692E122D91E2C00CEA5B3 /* CoreDataManager.swift in Sources */,
 				BBF692D722D8756800CEA5B3 /* Constants.swift in Sources */,
 			);

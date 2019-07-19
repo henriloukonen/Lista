@@ -2,7 +2,7 @@
 //  List+CoreDataProperties.swift
 //  Lista
 //
-//  Created by Henri Loukonen on 18/07/2019.
+//  Created by Henri Loukonen on 19/07/2019.
 //  Copyright © 2019 Henri Loukonen. All rights reserved.
 //
 //
@@ -17,9 +17,9 @@ extension List {
         return NSFetchRequest<List>(entityName: "List")
     }
 
-    @NSManaged public var category: String
+    @NSManaged public var amount: Int16
     @NSManaged public var dateAdded: NSDate
     @NSManaged public var item: String
-    @NSManaged public var amount: Int16
+    @NSManaged public var tag: Tag
 
 }

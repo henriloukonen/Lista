@@ -8,25 +8,20 @@
 
 import UIKit
 
-enum ListKeys {
-    static let listName = "List"
+enum EntityKey {
+    static let listEntity = "List"
+    static let tagEntity = "Tag"
     static let itemName = "item"
     static let date     = "dateAdded"
-    static let category = "category"
+    static let colorTag = "color"
     static let amount   = "amount"
 }
 
-enum ColorTag {
-    static let limeGreen = "lime"
-    static let blue      = "blue"
-    static let purple    = "purple"
-    static let cyan      = "cyan"
+enum Color {
+    static let lime      = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+    static let blue      = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+    static let purple    = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+    static let cyan      = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+    static let lightGray = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
 }
 
-enum Color {
-    static let limeGreen = UIColor(red: 0.2824, green: 0.8392, blue: 0.2431, alpha: 1.0) /* #48d63e */
-    static let blue      = UIColor(red: 0.2745, green: 0.4824, blue: 0.9569, alpha: 1.0) /* #467bf4 */
-    static let purple    = UIColor(red: 0.7529, green: 0.2549, blue: 0.8784, alpha: 1.0) /* #c041e0 */
-    static let cyan      = UIColor(red: 0.2784, green: 0.8902, blue: 0.9725, alpha: 1.0) /* #47e3f8 */
-    static let lightGray = UIColor(red: 0.7765, green: 0.7765, blue: 0.7765, alpha: 1.0)
-}

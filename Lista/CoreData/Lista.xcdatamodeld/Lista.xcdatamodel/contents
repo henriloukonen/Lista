@@ -2,11 +2,16 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="List" representedClassName="List" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="category" attributeType="String" syncable="YES"/>
         <attribute name="dateAdded" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="item" attributeType="String" syncable="YES"/>
+        <relationship name="tag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="items" inverseEntity="Tag" syncable="YES"/>
+    </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="items" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="tag" inverseEntity="List" syncable="YES"/>
     </entity>
     <elements>
-        <element name="List" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="List" positionX="-320.3125" positionY="-165.8046875" width="128" height="105"/>
+        <element name="Tag" positionX="-63" positionY="9" width="128" height="75"/>
     </elements>
 </model>

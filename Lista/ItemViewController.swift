@@ -1,5 +1,5 @@
 //
-//  AddItemViewController.swift
+//  ItemViewController.swift
 //  ListaV3
 //
 //  Created by Henri Loukonen on 02/07/2019.
@@ -8,25 +8,17 @@
 
 import UIKit
 
-class AddItemViewController: UIViewController, UITextFieldDelegate {
+class ItemViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var newItemTextField: UITextField!
     @IBOutlet var amountTextField: UITextField!
     @IBOutlet var categoryBGView: UIView!
-    @IBOutlet var lime: UIButton!
-    @IBOutlet var blue: UIButton!
-    @IBOutlet var purple: UIButton!
-    @IBOutlet var cyan: UIButton!
-    @IBOutlet var noColor: UIButton!
     
     var itemName: String!
-    var selectedTag: String!
     var amountOfItems: Int!
-    lazy var tags: [UIButton] = [lime, blue, purple, cyan, noColor]
-    
     
     let done: UIBarButtonItem = UIBarButtonItem(title: "Add", style: .done, target: self, action: #selector(doneButtonAction))
-    let amount: UIBarButtonItem = UIBarButtonItem(title: "Amount", style: .plain, target: self, action: #selector(addAmount))
+    let amount: UIBarButtonItem = UIBarButtonItem(title: "Amount", style: .plain, target: self, action: #selector(amountActionButton))
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
     
@@ -36,10 +28,6 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         
         done.isEnabled = false
-        
-        for button in tags {
-            button.layer.cornerRadius = 5
-        }
 
         let items = [amount, flexSpace, done]
         doneToolbar.barStyle = .default
@@ -52,36 +40,13 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         
         categoryBGView.layer.cornerRadius = 10
     }
-    
-    
-    //MARK: - Gesture regognizers for categories
-    
-    @IBAction func categoryTapped(sender: UIButton) {
-        switch sender {
-        case lime:
-            print("lime")
-            selectedTag = ColorTag.limeGreen
-        case blue:
-            print("blue")
-            selectedTag = ColorTag.blue
-        case purple:
-            selectedTag = ColorTag.purple
-            print("purple")
-        case cyan:
-            selectedTag = ColorTag.cyan
-            print("cyan")
-        default:
-            break
-        }
-    }
-    
+
     
     //MARK: - Textfield handling
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         doneButtonAction()
         return true
     }
-    
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         newItemTextField.text = ""
         done.isEnabled = false
@@ -98,7 +63,14 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let text = newItemTextField.text, !text.isEmpty else { return }
+        guard let amount = amountTextField.text, !text.isEmpty else { return }
+        
+        itemName = text
+        amountOfItems = Int(amount) ?? 0
+    }
     
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -106,16 +78,7 @@ class AddItemViewController: UIViewController, UITextFieldDelegate {
         amountTextField.resignFirstResponder()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let text = newItemTextField.text, !text.isEmpty else { return }
-        guard let amount = amountTextField.text, !text.isEmpty else { return }
-        
-        itemName = text
-        amountOfItems = Int(amount) ?? 1
-        _ = selectedTag
-    }
-    
-    @objc func addAmount() {
+    @objc func amountActionButton() {
         amountTextField.becomeFirstResponder()
     }
     @objc func doneButtonAction() {

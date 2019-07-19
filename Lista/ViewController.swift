@@ -15,8 +15,6 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBOutlet var isEmptyLabel: UILabel!
     @IBOutlet var noItemsView: UIView!
     @IBOutlet var selectButton: UIBarButtonItem!
-    @IBOutlet var amountLabel: UILabel!
-    
     
     private var itemPredicate: NSPredicate?
     private var fetchedResultsController: NSFetchedResultsController<List>!
@@ -28,21 +26,30 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         
         title = "Lista"
         navigationController?.navigationBar.prefersLargeTitles = true
+        
         tableView.dataSource = self
         tableView.delegate = self
         
         loadSavedItems()
     }
 
-    
+    @IBAction func unwindFromAddItemVC(_ sender: UIStoryboardSegue) {
+        if sender.source is ItemViewController {
+            if let senderVC = sender.source as? ItemViewController {
+                save(name: senderVC.itemName, amount: senderVC.amountOfItems)
+            }
+        }
+    }
+
     func loadSavedItems() {
         if fetchedResultsController == nil {
             let request = List.createFetchRequest()
-            let sortByCategory = NSSortDescriptor(key: ListKeys.category, ascending: false)
-            let sortByDate = NSSortDescriptor(key: ListKeys.date, ascending: false)
-            request.sortDescriptors = [sortByCategory, sortByDate]
-        
-            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: coreData.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+//            let sortByTag = NSSortDescriptor(key: ListKeys.tag, ascending: false)
+            let sortAllByDate = NSSortDescriptor(key: EntityKey.date, ascending: true)
+            request.sortDescriptors = [sortAllByDate]
+            request.fetchBatchSize = 20
+            
+            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: coreData.persistentContainer.viewContext, sectionNameKeyPath: EntityKey.date, cacheName: nil)
             fetchedResultsController.delegate = self
         }
         
@@ -58,78 +65,73 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     
     @IBAction func selectItems(_ sender: Any) {
         tableView.setEditing(!tableView.isEditing, animated: true)
-        selectButton.title? = tableView.isEditing ? "Done" : "Edit"
+        selectButton.title? = tableView.isEditing ? "Cancel" : "Select"
     }
     
-    func save(name: String, category: String, amount: Int) {
+    func save(name: String, amount: Int) {
         let currentDate = Date()
-        let entity = NSEntityDescription.entity(forEntityName: ListKeys.listName, in: coreData.persistentContainer.viewContext)!
-        let item = NSManagedObject(entity: entity, insertInto: coreData.persistentContainer.viewContext)
         
-        item.setValue(name, forKey: ListKeys.itemName)
-        item.setValue(currentDate, forKey: ListKeys.date)
-        item.setValue(category, forKey: ListKeys.category)
-        item.setValue(amount, forKey: ListKeys.amount)
+        let listEntity = NSEntityDescription.entity(forEntityName: EntityKey.listEntity, in: coreData.persistentContainer.viewContext)!
+        let newItem = NSManagedObject(entity: listEntity, insertInto: coreData.persistentContainer.viewContext)
+        
+//        let tagEntity = NSEntityDescription.entity(forEntityName: EntityKey.tagEntity, in: coreData.persistentContainer.viewContext)!
+//        let newTagColor = NSManagedObject(entity: tagEntity, insertInto: coreData.persistentContainer.viewContext)
+        
+        newItem.setValue(name, forKey: EntityKey.itemName)
+        newItem.setValue(currentDate, forKey: EntityKey.date)
+        newItem.setValue(amount, forKey: EntityKey.amount)
+        
+//        newTagColor.setValue(tag, forKey: "color")
+        
         coreData.saveContext()
-    }
-    
-    @IBAction func unwindFromAddItemVC(_ sender: UIStoryboardSegue) {
-        if sender.source is AddItemViewController {
-            if let senderVC = sender.source as? AddItemViewController {
-                save(name: senderVC.itemName, category: senderVC.selectedTag, amount: senderVC.amountOfItems)
-            }
-        }
     }
 }
 
 //MARK: - TableViews
 extension ViewController: UITableViewDataSource {
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let index = IndexSet(integer: sectionIndex)
+        
         switch type {
         case .delete:
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .left)
-            }
+            tableView.deleteSections(index, with: .left)
         case .insert:
-            if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .top)
-            }
+            tableView.insertSections(index, with: .top)
         default:
             break
         }
     }
-//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        view.tintColor = Color.cyan
-//        let header = view as! UITableViewHeaderFooterView
-//        header.textLabel?.textColor = UIColor.white
-//    }
+
     func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
+        let sections = fetchedResultsController.sections?.count
+        
+        if sections == 0 {
+            tableView.backgroundView = noItemsView
+            selectButton.isEnabled = false
+            
+        } else {
+            tableView.backgroundView = nil
+            selectButton.isEnabled = true
+        }
+        return sections ?? 0
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return fetchedResultsController.sections![section].name
+        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
-        if sectionInfo.numberOfObjects == 0 {
-            tableView.backgroundView = noItemsView
-            tableView.separatorStyle = .none
-            selectButton.isEnabled = false
-          
-        } else {
-            tableView.backgroundView = nil
-            tableView.separatorStyle = .singleLine
-            selectButton.isEnabled = true
-        }
+        
+       
         return sectionInfo.numberOfObjects
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! ItemTableViewCell
         let index = fetchedResultsController.object(at: indexPath)
-        let categoryColor = index.category
         
-        cell.configureCell(from: index, with: categoryColor)
+        cell.configureCell(from: index)
         
         return cell
     }
