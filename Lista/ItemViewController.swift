@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import CoreData
 
 class ItemViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var newItemTextField: UITextField!
     @IBOutlet var amountTextField: UITextField!
-    @IBOutlet var categoryBGView: UIView!
+    
     
     var itemName: String!
     var amountOfItems: Int!
+    var selectedTag: Int!
+    let tagControl = TagControl()
+    
+
+  
+    
     
     let done: UIBarButtonItem = UIBarButtonItem(title: "Add", style: .done, target: self, action: #selector(doneButtonAction))
     let amount: UIBarButtonItem = UIBarButtonItem(title: "Amount", style: .plain, target: self, action: #selector(amountActionButton))
@@ -28,17 +35,16 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         
         done.isEnabled = false
-
+        
+        
         let items = [amount, flexSpace, done]
         doneToolbar.barStyle = .default
         doneToolbar.items = items
         doneToolbar.sizeToFit()
-        
+     
         newItemTextField.becomeFirstResponder()
         newItemTextField.inputAccessoryView = doneToolbar
         amountTextField.inputAccessoryView = doneToolbar
-        
-        categoryBGView.layer.cornerRadius = 10
     }
 
     
@@ -63,14 +69,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let text = newItemTextField.text, !text.isEmpty else { return }
-        guard let amount = amountTextField.text, !text.isEmpty else { return }
-        
-        itemName = text
-        amountOfItems = Int(amount) ?? 0
-    }
+ 
     
     @IBAction func closeVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -85,5 +84,14 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "unwindAddItemVC", sender: nil)
         newItemTextField.resignFirstResponder()
         amountTextField.resignFirstResponder()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let text = newItemTextField.text, !text.isEmpty else { return }
+        guard let amount = amountTextField.text, !text.isEmpty else { return }
+        
+        itemName = text
+        amountOfItems = Int(amount) ?? 0
+        
     }
 }

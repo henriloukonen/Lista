@@ -10,11 +10,11 @@ import UIKit
 
 enum EntityKey {
     static let listEntity = "List"
-    static let tagEntity = "Tag"
-    static let itemName = "item"
-    static let date     = "dateAdded"
-    static let colorTag = "color"
-    static let amount   = "amount"
+    static let tagEntity  = "Tag"
+    static let itemName   = "item"
+    static let date       = "dateAdded"
+    static let tag        = "identifier"
+    static let amount     = "amount"
 }
 
 enum Color {

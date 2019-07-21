@@ -9,7 +9,6 @@
 import UIKit
 
 class ItemTableViewCell: UITableViewCell {
-    @IBOutlet var colorTagView: UIView!
     @IBOutlet var amountLabel: UILabel!
     @IBOutlet var itemLabel: UILabel!
     
@@ -17,9 +16,9 @@ class ItemTableViewCell: UITableViewCell {
   
 
     
-    func configureCell(from list: List) {
-        itemLabel?.text = list.item
-        amountLabel?.text = (list.amount<1) ? nil : String(list.amount)
+    func configureCell(from entity: List) {
+        itemLabel?.text = entity.item
+        amountLabel?.text = (entity.amount<1) ? nil : String(entity.amount)
         
 //        switch tagColor {
 //        case Color.cyan:
@@ -39,11 +38,6 @@ class ItemTableViewCell: UITableViewCell {
         _ = SeparatorStyle.none
         _ = layer.borderWidth = 2
         _ = layer.borderColor = UIColor.white.cgColor
-            
-        colorTagView.backgroundColor = Color.blue
-        colorTagView.layer.cornerRadius = 12
-        colorTagView.alpha = 0.7
-        
     }
 }
 
