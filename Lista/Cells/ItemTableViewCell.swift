@@ -12,32 +12,21 @@ class ItemTableViewCell: UITableViewCell {
     @IBOutlet var amountLabel: UILabel!
     @IBOutlet var itemLabel: UILabel!
     
-    var color: UIColor!
-  
-
-    
     func configureCell(from entity: List) {
         itemLabel?.text = entity.item
         amountLabel?.text = (entity.amount<1) ? nil : String(entity.amount)
-        
-//        switch tagColor {
-//        case Color.cyan:
-//            color = Color.cyan
-//        case Color.limeGreen:
-//            color = Color.lime
-//        case Color.blue:
-//            color = Color.blue
-//        case Color.purple:
-//            color = Color.purple
-//        default:
-//            color = nil
-//        }
-        
+
         //Style the cell
         
         _ = SeparatorStyle.none
         _ = layer.borderWidth = 2
         _ = layer.borderColor = UIColor.white.cgColor
+    }
+    func configureSelectedCell() {
+        itemLabel?.alpha = 0.6
+        UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 0.4, initialSpringVelocity: 2, options: [], animations: {
+            self.itemLabel?.transform =  CGAffineTransform(translationX: 20, y: 0)
+            })
     }
 }
 

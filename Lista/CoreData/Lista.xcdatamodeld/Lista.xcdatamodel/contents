@@ -3,6 +3,7 @@
     <entity name="List" representedClassName="List" syncable="YES">
         <attribute name="amount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dateAdded" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isDone" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="item" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
@@ -10,7 +11,7 @@
         <attribute name="identifier" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="List" positionX="-396.48828125" positionY="-144.5859375" width="128" height="103"/>
+        <element name="List" positionX="-396.48828125" positionY="-144.5859375" width="128" height="120"/>
         <element name="Tag" positionX="-63" positionY="9" width="128" height="58"/>
     </elements>
 </model>

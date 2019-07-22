@@ -36,13 +36,13 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         
         done.isEnabled = false
         
-        
         let items = [amount, flexSpace, done]
         doneToolbar.barStyle = .default
         doneToolbar.items = items
         doneToolbar.sizeToFit()
      
         newItemTextField.becomeFirstResponder()
+        
         newItemTextField.inputAccessoryView = doneToolbar
         amountTextField.inputAccessoryView = doneToolbar
     }
@@ -80,6 +80,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     @objc func amountActionButton() {
         amountTextField.becomeFirstResponder()
     }
+    
     @objc func doneButtonAction() {
         performSegue(withIdentifier: "unwindAddItemVC", sender: nil)
         newItemTextField.resignFirstResponder()

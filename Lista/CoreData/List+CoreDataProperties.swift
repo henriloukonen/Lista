@@ -2,7 +2,7 @@
 //  List+CoreDataProperties.swift
 //  Lista
 //
-//  Created by Henri Loukonen on 20/07/2019.
+//  Created by Henri Loukonen on 22/07/2019.
 //  Copyright © 2019 Henri Loukonen. All rights reserved.
 //
 //
@@ -21,5 +21,6 @@ extension List {
     @NSManaged public var dateAdded: Date
     @NSManaged public var item: String
     @NSManaged public var tag: Int16
+    @NSManaged public var isDone: Bool
 
 }
