@@ -11,7 +11,7 @@ import UIKit
 class TagControl: UIStackView {
 
     var lastSelectedTag: UIButton!
-    lazy var tags: [UIColor] = [Color.blue, Color.cyan, Color.lime, Color.orange, Color.purple]
+    lazy var tags: [UIColor] = [Color.blue, Color.cyan, Color.purple, Color.lime, Color.orange]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,6 +42,8 @@ class TagControl: UIStackView {
     }
     
     @objc func tagButtonTapped(button: UIButton) {
+        let hapticFeedback = UIImpactFeedbackGenerator(style: .light)
+        hapticFeedback.impactOccurred()
         print("button \(button.tag) is selected")
         
         if let selectedTag = lastSelectedTag { // if lastSelectedTag contains a button,
