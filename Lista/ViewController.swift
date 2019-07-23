@@ -133,22 +133,8 @@ extension ViewController: UITableViewDataSource {
             self.mark(itemName: item.item, done: item.isDone)
             
             let cell = self.tableView.cellForRow(at: indexPath) as! ItemTableViewCell
+            cell.animateDoneItem(using: item.isDone)
             
-            if item.isDone {
-            UIView.animate(withDuration: 0.3, delay: 0.7, usingSpringWithDamping: 0.4, initialSpringVelocity: 3, options: [.curveEaseInOut], animations: {
-                cell.itemLabel.textColor = Color.lightGray
-                cell.itemLabel.alpha = 0.4
-                cell.itemLabel.transform = CGAffineTransform(translationX: 30, y: 0)
-                cell.itemLabel.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            })
-            } else {
-                UIView.animate(withDuration: 0.3, delay: 0.7, usingSpringWithDamping: 0.4, initialSpringVelocity: 3, options: [.curveEaseInOut], animations: {
-                    cell.itemLabel?.textColor = nil
-                    cell.itemLabel?.alpha = 1
-                    cell.itemLabel?.transform = .identity
-                    cell.itemLabel?.transform = .identity
-                })
-            }
             print(item.isDone)
             boolValue(true)
         }

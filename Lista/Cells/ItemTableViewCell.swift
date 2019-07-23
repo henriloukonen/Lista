@@ -33,11 +33,27 @@ class ItemTableViewCell: UITableViewCell {
         _ = layer.borderWidth = 2
         _ = layer.borderColor = UIColor.white.cgColor
     }
-//    func animateMarking() {
-//        UIView.animate(withDuration: 1, delay: 0.3, options: [], animations: {
-//            
-//        })
-//    }
+    func animateDoneItem(using item: Bool) {
+        if item {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.3, delay: 0.7, usingSpringWithDamping: 0.4, initialSpringVelocity: 3, options: [.curveEaseInOut], animations: {
+                    self.itemLabel?.textColor = Color.lightGray
+                    self.itemLabel?.alpha = 0.4
+                    self.itemLabel?.transform = CGAffineTransform(translationX: 30, y: 0)
+                    self.itemLabel?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                })
+            }
+        } else {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.3, delay: 0.7, usingSpringWithDamping: 0.4, initialSpringVelocity: 3, options: [.curveEaseInOut], animations: {
+                    self.itemLabel?.textColor = nil
+                    self.itemLabel?.alpha = 1
+                    self.itemLabel?.transform = .identity
+                    self.itemLabel?.transform = .identity
+                })
+            }
+        }
+    }
 }
 
 
