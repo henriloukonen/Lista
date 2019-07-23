@@ -11,6 +11,7 @@ import CoreData
 
 class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     
+
     @IBOutlet var tableView: UITableView!
     @IBOutlet var isEmptyLabel: UILabel!
     @IBOutlet var noItemsView: UIView!
@@ -54,17 +55,13 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         
         coreData.saveContext()
     }
-    func mark(item: String, done: Bool) {
-//        let managedContext = coreData.persistentContainer.viewContext
+    func mark(itemName: String, done: Bool) {
         let fetchRequest = List.createFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "item == %@", item)
+        fetchRequest.predicate = NSPredicate(format: "item == %@", itemName)
         
         do {
             let item = try managedContext.fetch(fetchRequest)
-            
-            let updateItem = item[0]
-            updateItem.isDone = (done) ? false : true
-            
+            item[0].isDone = (done) ? false : true
             do {
                 try managedContext.save()
             } catch {
@@ -73,6 +70,8 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         } catch {
             print(error)
         }
+        
+       
     }
     
     func loadSavedItems() {
@@ -131,8 +130,25 @@ extension ViewController: UITableViewDataSource {
         let markAsDone = UIContextualAction(style: .normal, title: "Done") { (contextualAction, view, boolValue) in
             let item = self.fetchedResultsController.object(at: indexPath)
             
-            self.mark(item: item.item, done: item.isDone)
+            self.mark(itemName: item.item, done: item.isDone)
             
+            let cell = self.tableView.cellForRow(at: indexPath) as! ItemTableViewCell
+            
+            if item.isDone {
+            UIView.animate(withDuration: 0.3, delay: 0.7, usingSpringWithDamping: 0.4, initialSpringVelocity: 3, options: [.curveEaseInOut], animations: {
+                cell.itemLabel.textColor = Color.lightGray
+                cell.itemLabel.alpha = 0.4
+                cell.itemLabel.transform = CGAffineTransform(translationX: 30, y: 0)
+                cell.itemLabel.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            })
+            } else {
+                UIView.animate(withDuration: 0.3, delay: 0.7, usingSpringWithDamping: 0.4, initialSpringVelocity: 3, options: [.curveEaseInOut], animations: {
+                    cell.itemLabel?.textColor = nil
+                    cell.itemLabel?.alpha = 1
+                    cell.itemLabel?.transform = .identity
+                    cell.itemLabel?.transform = .identity
+                })
+            }
             print(item.isDone)
             boolValue(true)
         }
@@ -201,3 +217,4 @@ extension ViewController: UITableViewDataSource {
 //MARK: -  TableView delegates
 extension ViewController: UITableViewDelegate {
 }
+
