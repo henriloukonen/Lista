@@ -15,12 +15,13 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var amountTextField: UITextField!
     
     
-    var itemName: String!
+    var oldName: String!
+    var newName: String!
     var amountOfItems: Int64!
     var selectedTag: Int64!
     var passedItem: List! { //values that were passed from "edit" swipe action
         didSet {
-            self.itemName = passedItem.item
+            self.oldName = passedItem.item
             self.amountOfItems = passedItem.amount
             self.selectedTag = passedItem.tag
         }
@@ -50,7 +51,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         
         if let oldItem = passedItem { //if user pressed "edit", set these values
             title = oldItem.item
-            newItemTextField.text = itemName
+            newItemTextField.text = oldName
             amountTextField.text = String(amountOfItems)
         }
         newItemTextField.inputAccessoryView = doneToolbar
@@ -60,7 +61,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Textfield handling
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        doneButtonAction()
+        
         return true
     }
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
@@ -95,8 +96,8 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let text = newItemTextField.text, !text.isEmpty else { return }
         guard let amount = amountTextField.text, !text.isEmpty else { return }
-        
-        itemName = text
+        newName = text
+        _ = oldName
         amountOfItems = Int64(amount) ?? 0
         selectedTag = 0
     }
