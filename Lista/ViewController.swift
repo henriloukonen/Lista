@@ -36,8 +36,13 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBAction func unwindFromAddItemVC(_ sender: UIStoryboardSegue) {
         if sender.source is ItemViewController {
             if let senderVC = sender.source as? ItemViewController {
-                save(name: senderVC.itemName, amount: senderVC.amountOfItems, tag: senderVC.selectedTag)
+                if senderVC.passedItem != nil {
+                    updateItem(oldName: senderVC.oldName, newName: senderVC.newName, newAmount: senderVC.amountOfItems, newTag: senderVC.selectedTag)
+                } else {
+                    save(name: senderVC.oldName, amount: senderVC.amountOfItems, tag: senderVC.selectedTag)
+                }
             }
+            
         }
     }
     
@@ -55,6 +60,26 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         
         coreData.saveContext()
     }
+    func updateItem(oldName: String, newName: String, newAmount: Int64, newTag: Int64) {
+        let fetchRequest = List.createFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "item == %@", oldName)
+        
+        do {
+            
+            let item = try managedContext.fetch(fetchRequest)
+            if newName !=  oldName { item[0].item = newName }
+            if newAmount != item[0].amount { item[0].amount = newAmount }
+//            if item[0].tag    != newTag    { item[0].tag = newTag }
+            tableView.reloadData()
+            do {
+                try managedContext.save()
+            } catch {
+                print(error)
+            }
+        } catch {
+            print(error)
+        }
+    }
     func mark(itemName: String, done: Bool) {
         let fetchRequest = List.createFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "item == %@", itemName)
@@ -71,6 +96,8 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
             print(error)
         }
     }
+   
+    
     
     func loadSavedItems() {
         if fetchedResultsController == nil {
@@ -130,7 +157,7 @@ extension ViewController: UITableViewDataSource {
             
             let item = self.fetchedResultsController.object(at: indexPath)
             let cell = self.tableView.cellForRow(at: indexPath) as! ItemTableViewCell
-        
+            
             self.mark(itemName: item.item, done: item.isDone)
             cell.animateDoneItem(using: item.isDone)
             
@@ -155,12 +182,12 @@ extension ViewController: UITableViewDataSource {
         let edit = UIContextualAction(style: .normal, title: "Edit") { (contextualAction, view, boolValue) in
                 let editVC = self.storyboard?.instantiateViewController(withIdentifier: "itemVC") as! ItemViewController
                 editVC.passedItem = item
-                //            let transition = CATransition()
-                //            transition.duration = 0.5
-                //            transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-                //            transition.type = .push
-                //            transition.subtype = .fromRight
-                //            self.navigationController?.view.layer.add(transition, forKey: kCATransition)
+//                            let transition = CATransition()
+//                            transition.duration = 0.5
+//                            transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+//                            transition.type = .push
+//                            transition.subtype = .fromTop
+//                            self.navigationController?.view.layer.add(transition, forKey: kCATransition)
                 self.navigationController?.pushViewController(editVC, animated: true)
             
             boolValue(true)
@@ -173,7 +200,7 @@ extension ViewController: UITableViewDataSource {
         } else {
             let actions = UISwipeActionsConfiguration(actions: [delete, edit])
             return actions
-        }    
+        }
     }
 //
 //    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
@@ -206,7 +233,10 @@ extension ViewController: UITableViewDataSource {
                 tableView.insertRows(at: [indexPath], with: .top)
             }
             print("added")
-            
+        case .update:
+            if indexPath != nil{
+                
+            }
         default:
             break
         }
