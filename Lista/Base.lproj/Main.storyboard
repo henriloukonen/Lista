@@ -23,35 +23,33 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="itemCell" rowHeight="50" id="j74-7d-6Pb" customClass="ItemTableViewCell" customModule="Lista" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="itemCell" rowHeight="50" id="j74-7d-6Pb" customClass="ItemTableViewCell" customModule="Lista" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j74-7d-6Pb" id="gKm-bo-PHc">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" preservesSuperviewLayoutMargins="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gqX-XM-9ML">
-                                                    <rect key="frame" x="298" y="16.666666666666668" width="7" height="17.000000000000004"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" preservesSuperviewLayoutMargins="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gqX-XM-9ML">
+                                                    <rect key="frame" x="357.66666666666669" y="15" width="8.3333333333333144" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmm-Xj-HUR">
-                                                    <rect key="frame" x="15" y="-18" width="258" height="86"/>
+                                                    <rect key="frame" x="15" y="15" width="45" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="gmm-Xj-HUR" firstAttribute="leading" secondItem="gKm-bo-PHc" secondAttribute="leading" constant="15" id="0RH-IN-CJV"/>
-                                                <constraint firstItem="gmm-Xj-HUR" firstAttribute="centerY" secondItem="gqX-XM-9ML" secondAttribute="centerY" id="302-T0-RGB"/>
-                                                <constraint firstAttribute="trailing" secondItem="gqX-XM-9ML" secondAttribute="trailing" constant="15" id="Ox7-Bn-ij3"/>
-                                                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="gqX-XM-9ML" secondAttribute="bottom" constant="19" id="VeY-3x-qmU"/>
-                                                <constraint firstItem="gmm-Xj-HUR" firstAttribute="top" secondItem="gKm-bo-PHc" secondAttribute="topMargin" constant="-29" id="dO5-1f-OGz"/>
-                                                <constraint firstItem="gqX-XM-9ML" firstAttribute="top" relation="lessThanOrEqual" secondItem="gKm-bo-PHc" secondAttribute="top" constant="19" id="ixV-kL-S9W"/>
-                                                <constraint firstItem="gqX-XM-9ML" firstAttribute="centerY" secondItem="gKm-bo-PHc" secondAttribute="centerY" id="sne-9q-p89"/>
-                                                <constraint firstItem="gqX-XM-9ML" firstAttribute="leading" secondItem="gmm-Xj-HUR" secondAttribute="trailing" constant="25" id="wbT-QR-CAL"/>
+                                                <constraint firstItem="gmm-Xj-HUR" firstAttribute="leading" secondItem="gKm-bo-PHc" secondAttribute="leading" constant="15" id="7tt-Uv-RnX"/>
+                                                <constraint firstAttribute="trailing" secondItem="gqX-XM-9ML" secondAttribute="trailing" constant="9" id="AoT-cc-lFD"/>
+                                                <constraint firstAttribute="bottom" secondItem="gqX-XM-9ML" secondAttribute="bottom" constant="11" id="kmS-ns-zbG"/>
+                                                <constraint firstItem="gqX-XM-9ML" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gKm-bo-PHc" secondAttribute="top" priority="999" constant="15" id="nBp-TK-vje"/>
+                                                <constraint firstItem="gmm-Xj-HUR" firstAttribute="top" secondItem="gqX-XM-9ML" secondAttribute="top" id="tVE-u2-OqM"/>
+                                                <constraint firstAttribute="bottom" secondItem="gmm-Xj-HUR" secondAttribute="bottom" constant="13" id="yNi-OO-U9g"/>
+                                                <constraint firstItem="gmm-Xj-HUR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gKm-bo-PHc" secondAttribute="top" priority="999" constant="15" id="zmP-Av-YOM"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -72,6 +70,11 @@
                         <viewLayoutGuide key="safeArea" id="uka-gW-dNv"/>
                     </view>
                     <toolbarItems>
+                        <barButtonItem title="Edit" id="s2j-n1-DeR">
+                            <connections>
+                                <action selector="edit:" destination="xhm-LU-QdO" id="IjY-dE-3A0"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="LMu-eW-x2Q"/>
                         <barButtonItem style="done" systemItem="add" id="WRT-Z1-LbD">
                             <connections>
@@ -265,7 +268,7 @@
         <!--Item View Controller-->
         <scene sceneID="HxD-DD-i0i">
             <objects>
-                <viewController id="yr4-jc-gGi" customClass="ItemViewController" customModule="Lista" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="itemVC" id="yr4-jc-gGi" customClass="ItemViewController" customModule="Lista" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jbh-lb-CQj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

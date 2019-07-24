@@ -16,15 +16,19 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     
     
     var itemName: String!
-    var amountOfItems: Int!
-    var selectedTag: Int!
-    let tagControl = TagControl()
+    var amountOfItems: Int64!
+    var selectedTag: Int64!
+    var passedItem: List! { //values that were passed from "edit" swipe action
+        didSet {
+            self.itemName = passedItem.item
+            self.amountOfItems = passedItem.amount
+            self.selectedTag = passedItem.tag
+        }
+    }
+    
     
 
-  
-    
-    
-    let done: UIBarButtonItem = UIBarButtonItem(title: "Add", style: .done, target: self, action: #selector(doneButtonAction))
+    let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
     let amount: UIBarButtonItem = UIBarButtonItem(title: "Amount", style: .plain, target: self, action: #selector(amountActionButton))
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
@@ -32,6 +36,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         title = "Add Item"
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         
         done.isEnabled = false
@@ -40,9 +45,14 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         doneToolbar.barStyle = .default
         doneToolbar.items = items
         doneToolbar.sizeToFit()
-     
+        
         newItemTextField.becomeFirstResponder()
         
+        if let oldItem = passedItem { //if user pressed "edit", set these values
+            title = oldItem.item
+            newItemTextField.text = itemName
+            amountTextField.text = String(amountOfItems)
+        }
         newItemTextField.inputAccessoryView = doneToolbar
         amountTextField.inputAccessoryView = doneToolbar
     }
@@ -72,6 +82,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
  
     
     @IBAction func closeVC(_ sender: Any) {
+        navigationController?.popToRootViewController(animated: true)
         dismiss(animated: true, completion: nil)
         newItemTextField.resignFirstResponder()
         amountTextField.resignFirstResponder()
@@ -81,18 +92,17 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         amountTextField.becomeFirstResponder()
     }
     
-    @objc func doneButtonAction() {
-        performSegue(withIdentifier: "unwindAddItemVC", sender: nil)
-        newItemTextField.resignFirstResponder()
-        amountTextField.resignFirstResponder()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let text = newItemTextField.text, !text.isEmpty else { return }
         guard let amount = amountTextField.text, !text.isEmpty else { return }
         
         itemName = text
-        amountOfItems = Int(amount) ?? 0
-        
+        amountOfItems = Int64(amount) ?? 0
+        selectedTag = 0
+    }
+    @objc func doneButtonAction() {
+        performSegue(withIdentifier: "unwindAddItemVC", sender: nil)
+        newItemTextField.resignFirstResponder()
+        amountTextField.resignFirstResponder()
     }
 }

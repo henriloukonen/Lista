@@ -11,7 +11,6 @@ import CoreData
 
 class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     
-
     @IBOutlet var tableView: UITableView!
     @IBOutlet var isEmptyLabel: UILabel!
     @IBOutlet var noItemsView: UIView!
@@ -37,12 +36,12 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBAction func unwindFromAddItemVC(_ sender: UIStoryboardSegue) {
         if sender.source is ItemViewController {
             if let senderVC = sender.source as? ItemViewController {
-                save(name: senderVC.itemName, amount: senderVC.amountOfItems)
+                save(name: senderVC.itemName, amount: senderVC.amountOfItems, tag: senderVC.selectedTag)
             }
         }
     }
     
-    func save(name: String, amount: Int) {
+    func save(name: String, amount: Int64, tag: Int64) {
         let currentDate = Date()
         
         let listEntity = NSEntityDescription.entity(forEntityName: Entity.Name.list, in: managedContext)!
@@ -51,6 +50,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         newItem.setValue(name, forKey: Entity.Attribute.itemName)
         newItem.setValue(currentDate, forKey: Entity.Attribute.date)
         newItem.setValue(amount, forKey: Entity.Attribute.amount)
+        newItem.setValue(tag, forKey: Entity.Attribute.tag)
         newItem.setValue(false, forKey: Entity.Attribute.isDone)
         
         coreData.saveContext()
@@ -70,8 +70,6 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         } catch {
             print(error)
         }
-        
-       
     }
     
     func loadSavedItems() {
@@ -94,8 +92,9 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
             print("fetch failed")
         }
     }
-    
-    
+    @IBAction func edit(_ sender: Any) {
+        tableView.setEditing(true, animated: true)
+    }
 }
 
 //MARK: - TableViews
@@ -128,17 +127,16 @@ extension ViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let markAsDone = UIContextualAction(style: .normal, title: "Done") { (contextualAction, view, boolValue) in
+            
             let item = self.fetchedResultsController.object(at: indexPath)
-            
-            self.mark(itemName: item.item, done: item.isDone)
-            
             let cell = self.tableView.cellForRow(at: indexPath) as! ItemTableViewCell
+        
+            self.mark(itemName: item.item, done: item.isDone)
             cell.animateDoneItem(using: item.isDone)
             
-            print(item.isDone)
             boolValue(true)
         }
-        
+        markAsDone.image = UIImage(named: "checkmark.png")
         markAsDone.backgroundColor = Color.lime
         let action = UISwipeActionsConfiguration(actions: [markAsDone])
         
@@ -146,22 +144,36 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+       let item = self.fetchedResultsController.object(at: indexPath)
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
-            let item = self.fetchedResultsController.object(at: indexPath)
-            self.managedContext.delete(item)
             
+            self.managedContext.delete(item)
             self.coreData.saveContext()
             boolValue(true)
         }
+        
         let edit = UIContextualAction(style: .normal, title: "Edit") { (contextualAction, view, boolValue) in
+                let editVC = self.storyboard?.instantiateViewController(withIdentifier: "itemVC") as! ItemViewController
+                editVC.passedItem = item
+                //            let transition = CATransition()
+                //            transition.duration = 0.5
+                //            transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                //            transition.type = .push
+                //            transition.subtype = .fromRight
+                //            self.navigationController?.view.layer.add(transition, forKey: kCATransition)
+                self.navigationController?.pushViewController(editVC, animated: true)
+            
             boolValue(true)
-//            let editItem = self.fetchedResultsController.object(at: indexPath)
         }
-        edit.backgroundColor = Color.cyan
-        let actions = UISwipeActionsConfiguration(actions: [delete, edit])
+            edit.backgroundColor = Color.cyan
         
-        
-        return actions
+        if item.isDone {
+            let actions = UISwipeActionsConfiguration(actions: [delete])
+            return actions
+        } else {
+            let actions = UISwipeActionsConfiguration(actions: [delete, edit])
+            return actions
+        }    
     }
 //
 //    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
@@ -194,6 +206,7 @@ extension ViewController: UITableViewDataSource {
                 tableView.insertRows(at: [indexPath], with: .top)
             }
             print("added")
+            
         default:
             break
         }
@@ -202,5 +215,6 @@ extension ViewController: UITableViewDataSource {
 
 //MARK: -  TableView delegates
 extension ViewController: UITableViewDelegate {
+
 }
 

@@ -19,6 +19,9 @@ class AlertViewController: UIViewController {
     var actionButtonTitle = String()
     var titleForAlert = String()
     var body = String()
+    var amount = Int()
+    var itemName = String()
+    var tag = Int()
     var buttonAction: (() -> Void)?
     
     override func viewDidLoad() {
@@ -60,6 +63,9 @@ class AlertViewController: UIViewController {
         alertVC.body = message
         
         return alertVC
+    }
+    static func editItem(title: String, amount: Int, tag: Int) {
+        
     }
 
     

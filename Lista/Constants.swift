@@ -13,11 +13,10 @@ enum Entity {
         static let list = "List"
         static let tag  = "Tag"
     }
-    
     enum Attribute {
         static let itemName   = "item"
         static let date       = "dateAdded"
-        static let tag        = "identifier"
+        static let tag        = "tag"
         static let amount     = "amount"
         static let isDone     = "isDone"
     }
@@ -29,6 +28,10 @@ enum Color {
     static let purple    = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
     static let orange    = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
     static let cyan      = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
-    static let lightGray = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+    static let gray      = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+    static let lightGray = #colorLiteral(red: 0.4779320108, green: 0.5174674322, blue: 0.5749025791, alpha: 1)
 }
 
+enum PreferDarkmode {
+    
+}
