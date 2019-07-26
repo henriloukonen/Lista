@@ -14,6 +14,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var isEmptyLabel: UILabel!
     @IBOutlet var noItemsView: UIView!
+    @IBOutlet var deleteItems: UIBarButtonItem!
     
     private var itemPredicate: NSPredicate?
     private var fetchedResultsController: NSFetchedResultsController<List>!
@@ -39,14 +40,13 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
                 if senderVC.passedItem != nil {
                     updateItem(oldName: senderVC.oldName, newName: senderVC.newName, newAmount: senderVC.amountOfItems, newTag: senderVC.selectedTag)
                 } else {
-                    save(name: senderVC.oldName, amount: senderVC.amountOfItems, tag: senderVC.selectedTag)
+                    saveNewItem(name: senderVC.newName, amount: senderVC.amountOfItems, tag: senderVC.selectedTag)
                 }
             }
-            
         }
     }
     
-    func save(name: String, amount: Int64, tag: Int64) {
+    func saveNewItem(name: String, amount: Int64, tag: Int64) {
         let currentDate = Date()
         
         let listEntity = NSEntityDescription.entity(forEntityName: Entity.Name.list, in: managedContext)!
@@ -65,17 +65,12 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         fetchRequest.predicate = NSPredicate(format: "item == %@", oldName)
         
         do {
-            
             let item = try managedContext.fetch(fetchRequest)
-            if newName !=  oldName { item[0].item = newName }
-            if newAmount != item[0].amount { item[0].amount = newAmount }
-//            if item[0].tag    != newTag    { item[0].tag = newTag }
-            tableView.reloadData()
-            do {
-                try managedContext.save()
-            } catch {
-                print(error)
-            }
+            if newName     !=  oldName        { item[0].item   = newName }
+            if newAmount   !=  item[0].amount { item[0].amount = newAmount }
+            if newTag      !=  item[0].tag    { item[0].tag    = newTag }
+            
+            coreData.saveContext()
         } catch {
             print(error)
         }
@@ -98,7 +93,6 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
     }
    
     
-    
     func loadSavedItems() {
         if fetchedResultsController == nil {
             let request = List.createFetchRequest()
@@ -119,8 +113,54 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
             print("fetch failed")
         }
     }
-    @IBAction func edit(_ sender: Any) {
-        tableView.setEditing(true, animated: true)
+    @IBAction func editItems(_ sender: Any) {
+        
+        let deleteAll = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        deleteAll.addAction(UIAlertAction(title: "Delete all", style: .destructive, handler: { action in
+            self.deleteAllItems()
+        }))
+        deleteAll.addAction(UIAlertAction(title: "Clear done items", style: .default, handler: { action in
+            self.clearDoneItems()
+        }))
+        
+        deleteAll.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(deleteAll, animated: true)
+    }
+    func clearDoneItems() {
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "List")
+        
+        fetch.predicate = NSPredicate(format: "isDone == true")
+        
+        do {
+            tableView.beginUpdates()
+            let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetch)
+            batchDeleteRequest.resultType = .resultTypeObjectIDs
+            
+            let result = try self.managedContext.execute(batchDeleteRequest) as! NSBatchDeleteResult
+            let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: result.result as! [NSManagedObjectID]]
+            
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.managedContext])
+            tableView.endUpdates()
+            
+            let transition = CATransition()
+            transition.duration = 0.6
+            transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            transition.type = .fade
+            transition.subtype = .fromTop
+            self.tableView.layer.add(transition, forKey: kCATransition)
+            
+        } catch {
+            fatalError("Failed to execute request: \(error)")
+        }
+    }
+    func deleteAllItems() {
+        let confirmDelete = UIAlertController(title: "This action cannot be undone", message: nil, preferredStyle: .actionSheet)
+        confirmDelete.addAction(UIAlertAction(title: "Delete all", style: .destructive, handler: { action in
+            
+            self.tableView.reloadData()
+            }))
+        confirmDelete.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(confirmDelete, animated: true)
     }
 }
 
@@ -140,6 +180,7 @@ extension ViewController: UITableViewDataSource {
         let sectionInfo = fetchedResultsController.sections![section]
         let rows = sectionInfo.numberOfObjects
         tableView.backgroundView = (rows==0) ? noItemsView : nil
+        deleteItems.isEnabled = (rows==0) ? false : true
         return rows
     }
     
@@ -156,10 +197,8 @@ extension ViewController: UITableViewDataSource {
         let markAsDone = UIContextualAction(style: .normal, title: "Done") { (contextualAction, view, boolValue) in
             
             let item = self.fetchedResultsController.object(at: indexPath)
-            let cell = self.tableView.cellForRow(at: indexPath) as! ItemTableViewCell
             
             self.mark(itemName: item.item, done: item.isDone)
-            cell.animateDoneItem(using: item.isDone)
             
             boolValue(true)
         }
@@ -230,12 +269,13 @@ extension ViewController: UITableViewDataSource {
             print("deleted")
         case .insert:
             if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .top)
+                tableView.insertRows(at: [indexPath], with: .bottom)
             }
             print("added")
         case .update:
-            if indexPath != nil{
-                
+            if let indexPath = indexPath {
+                tableView.reloadRows(at: [indexPath], with: .fade)
+               
             }
         default:
             break

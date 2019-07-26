@@ -2,7 +2,7 @@
 //  List+CoreDataProperties.swift
 //  Lista
 //
-//  Created by Henri Loukonen on 24/07/2019.
+//  Created by Henri Loukonen on 26/07/2019.
 //  Copyright © 2019 Henri Loukonen. All rights reserved.
 //
 //

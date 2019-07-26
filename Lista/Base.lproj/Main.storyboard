@@ -36,18 +36,27 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmm-Xj-HUR">
-                                                    <rect key="frame" x="15" y="15" width="45" height="22"/>
+                                                    <rect key="frame" x="15" y="15" width="290" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ct-1S-jJO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="11" height="50"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="2Ct-1S-jJO" firstAttribute="top" secondItem="gKm-bo-PHc" secondAttribute="top" id="2fG-IP-6Zg"/>
                                                 <constraint firstItem="gmm-Xj-HUR" firstAttribute="leading" secondItem="gKm-bo-PHc" secondAttribute="leading" constant="15" id="7tt-Uv-RnX"/>
                                                 <constraint firstAttribute="trailing" secondItem="gqX-XM-9ML" secondAttribute="trailing" constant="9" id="AoT-cc-lFD"/>
+                                                <constraint firstItem="2Ct-1S-jJO" firstAttribute="leading" secondItem="gKm-bo-PHc" secondAttribute="leading" id="RsS-YP-S96"/>
+                                                <constraint firstAttribute="trailing" secondItem="gmm-Xj-HUR" secondAttribute="trailing" constant="70" id="XD4-49-Ou6"/>
+                                                <constraint firstAttribute="bottom" secondItem="2Ct-1S-jJO" secondAttribute="bottom" id="a4r-rZ-1Oe"/>
                                                 <constraint firstAttribute="bottom" secondItem="gqX-XM-9ML" secondAttribute="bottom" constant="11" id="kmS-ns-zbG"/>
                                                 <constraint firstItem="gqX-XM-9ML" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gKm-bo-PHc" secondAttribute="top" priority="999" constant="15" id="nBp-TK-vje"/>
                                                 <constraint firstItem="gmm-Xj-HUR" firstAttribute="top" secondItem="gqX-XM-9ML" secondAttribute="top" id="tVE-u2-OqM"/>
+                                                <constraint firstItem="gmm-Xj-HUR" firstAttribute="leading" secondItem="2Ct-1S-jJO" secondAttribute="trailing" constant="4" id="yDH-xQ-sUR"/>
                                                 <constraint firstAttribute="bottom" secondItem="gmm-Xj-HUR" secondAttribute="bottom" constant="13" id="yNi-OO-U9g"/>
                                                 <constraint firstItem="gmm-Xj-HUR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gKm-bo-PHc" secondAttribute="top" priority="999" constant="15" id="zmP-Av-YOM"/>
                                             </constraints>
@@ -55,6 +64,7 @@
                                         <connections>
                                             <outlet property="amountLabel" destination="gqX-XM-9ML" id="nNP-wP-3X2"/>
                                             <outlet property="itemLabel" destination="gmm-Xj-HUR" id="A3x-gH-VCr"/>
+                                            <outlet property="tagView" destination="2Ct-1S-jJO" id="G1e-gE-fBb"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -70,9 +80,9 @@
                         <viewLayoutGuide key="safeArea" id="uka-gW-dNv"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Edit" id="s2j-n1-DeR">
+                        <barButtonItem systemItem="trash" id="s2j-n1-DeR">
                             <connections>
-                                <action selector="edit:" destination="xhm-LU-QdO" id="IjY-dE-3A0"/>
+                                <action selector="editItems:" destination="xhm-LU-QdO" id="JT2-Yl-Zjo"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="LMu-eW-x2Q"/>
@@ -93,6 +103,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="deleteItems" destination="s2j-n1-DeR" id="uQ6-su-U9v"/>
                         <outlet property="isEmptyLabel" destination="0Dn-tD-bGV" id="d4K-OM-BRU"/>
                         <outlet property="noItemsView" destination="IxH-QZ-olS" id="7ob-1k-jZb"/>
                         <outlet property="tableView" destination="OmT-ql-RCL" id="aHf-hp-nKg"/>

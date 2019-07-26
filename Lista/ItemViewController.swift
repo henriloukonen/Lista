@@ -14,7 +14,6 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var newItemTextField: UITextField!
     @IBOutlet var amountTextField: UITextField!
     
-    
     var oldName: String!
     var newName: String!
     var amountOfItems: Int64!
@@ -27,8 +26,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-
+    let tags = TagControl()
     let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
     let amount: UIBarButtonItem = UIBarButtonItem(title: "Amount", style: .plain, target: self, action: #selector(amountActionButton))
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -50,6 +48,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         newItemTextField.becomeFirstResponder()
         
         if let oldItem = passedItem { //if user pressed "edit", set these values
+            done.isEnabled = true
             title = oldItem.item
             newItemTextField.text = oldName
             amountTextField.text = String(amountOfItems)
@@ -61,7 +60,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Textfield handling
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
+        doneButtonAction()
         return true
     }
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
@@ -99,7 +98,11 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         newName = text
         _ = oldName
         amountOfItems = Int64(amount) ?? 0
-        selectedTag = 0
+        
+        
+        if let tag = tags.currentlySelectedTag {
+            selectedTag = Int64(tag)
+        }
     }
     @objc func doneButtonAction() {
         performSegue(withIdentifier: "unwindAddItemVC", sender: nil)
