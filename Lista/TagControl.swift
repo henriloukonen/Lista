@@ -11,9 +11,9 @@ import UIKit
 class TagControl: UIStackView {
 
     var lastSelectedTag: UIButton?
-    var currentlySelectedTag: Int?
+    var currentlySelectedTag: UIButton?
     
-    lazy var tagsArray: [UIColor] = [Color.blue, Color.cyan, Color.purple, Color.lime, Color.orange]
+    lazy var tagsArray: [UIColor] = [Color.clear, Color.blue, Color.cyan, Color.purple, Color.lime, Color.orange]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,7 +27,7 @@ class TagControl: UIStackView {
     
     private func setupTags() {
         
-        for i in 0..<tagsArray.count {
+        for i in 1..<tagsArray.count {
             let tag = UIButton()
             
             tag.backgroundColor = tagsArray[i]
@@ -45,8 +45,9 @@ class TagControl: UIStackView {
 
     
     @objc func tagButtonTapped(button: UIButton) {
-        currentlySelectedTag = button.tag
-
+        
+        currentlySelectedTag = button
+        
         let hapticFeedback = UIImpactFeedbackGenerator(style: .light)
         hapticFeedback.impactOccurred()
         print("button \(button.tag) is selected")
@@ -68,8 +69,6 @@ class TagControl: UIStackView {
 //                button.transform = CGAffineTransform(translationX: 1, y: -7)
                 button.transform = CGAffineTransform(scaleX: 1, y: 1)
             })
-            
-            button.isSelected = true
-        
+        button.isSelected = true
     }
 }
