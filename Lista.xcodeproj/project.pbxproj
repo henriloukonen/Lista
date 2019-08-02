@@ -10,6 +10,18 @@
 		BB02B16622E1F15E0065749B /* TagControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB02B16522E1F15E0065749B /* TagControl.swift */; };
 		BB0757CA22E6505100B85009 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0757C922E6505100B85009 /* SettingsTableViewController.swift */; };
 		BB07EF2222E730EC009BFB20 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB07EF2122E730EC009BFB20 /* AlertViewController.swift */; };
+		BB122F1F22F1C88D005DE9DD /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB122F1E22F1C88D005DE9DD /* Row.swift */; };
+		BB122F2622F1CDF2005DE9DD /* AddItemInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB122F2522F1CDF2005DE9DD /* AddItemInterfaceController.swift */; };
+		BB3867FF22F09C080088A628 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB3867FD22F09C080088A628 /* Interface.storyboard */; };
+		BB38680122F09C0B0088A628 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB38680022F09C0B0088A628 /* Assets.xcassets */; };
+		BB38680822F09C0B0088A628 /* Lista Watch App Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BB38680722F09C0B0088A628 /* Lista Watch App Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BB38680F22F09C0B0088A628 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38680E22F09C0B0088A628 /* ExtensionDelegate.swift */; };
+		BB38681122F09C0B0088A628 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38681022F09C0B0088A628 /* NotificationController.swift */; };
+		BB38681322F09C0C0088A628 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB38681222F09C0C0088A628 /* Assets.xcassets */; };
+		BB38681822F09C0C0088A628 /* Lista Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = BB3867FB22F09C080088A628 /* Lista Watch App.app */; };
+		BB38682422F09F010088A628 /* ItemInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38682322F09F010088A628 /* ItemInterfaceController.swift */; };
+		BB69B8F822F471F70068405F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692D622D8756800CEA5B3 /* Constants.swift */; };
+		BBBA0A7922F1DABC00883D29 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA0A7822F1DABC00883D29 /* WatchSessionManager.swift */; };
 		BBEF72BB22E0485A00B76A9C /* List+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF72B922E0485A00B76A9C /* List+CoreDataClass.swift */; };
 		BBEF72BC22E0485A00B76A9C /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF72BA22E0485A00B76A9C /* List+CoreDataProperties.swift */; };
 		BBF692BE22D7D81A00CEA5B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692BD22D7D81A00CEA5B3 /* AppDelegate.swift */; };
@@ -25,10 +37,66 @@
 		BBF692F222DDF31C00CEA5B3 /* Alert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBF692F022DDF31B00CEA5B3 /* Alert.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		BB38680922F09C0B0088A628 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBF692B222D7D81A00CEA5B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB38680622F09C0B0088A628;
+			remoteInfo = "Lista Watch App Extension";
+		};
+		BB38681622F09C0C0088A628 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBF692B222D7D81A00CEA5B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB3867FA22F09C080088A628;
+			remoteInfo = "Lista Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BB38681E22F09C0C0088A628 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BB38680822F09C0B0088A628 /* Lista Watch App Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB38682022F09C0C0088A628 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				BB38681822F09C0C0088A628 /* Lista Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		BB02B16522E1F15E0065749B /* TagControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagControl.swift; sourceTree = "<group>"; };
 		BB0757C922E6505100B85009 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		BB07EF2122E730EC009BFB20 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		BB122F1E22F1C88D005DE9DD /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
+		BB122F2522F1CDF2005DE9DD /* AddItemInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemInterfaceController.swift; sourceTree = "<group>"; };
+		BB3867FB22F09C080088A628 /* Lista Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lista Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB3867FE22F09C080088A628 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		BB38680022F09C0B0088A628 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BB38680222F09C0B0088A628 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB38680722F09C0B0088A628 /* Lista Watch App Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Lista Watch App Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB38680E22F09C0B0088A628 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		BB38681022F09C0B0088A628 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		BB38681222F09C0C0088A628 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BB38681422F09C0C0088A628 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB38681522F09C0C0088A628 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		BB38682322F09F010088A628 /* ItemInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInterfaceController.swift; sourceTree = "<group>"; };
+		BBBA0A7822F1DABC00883D29 /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		BBEF72B922E0485A00B76A9C /* List+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BBEF72BA22E0485A00B76A9C /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BBF692BA22D7D81A00CEA5B3 /* Lista.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lista.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +115,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BB38680422F09C0B0088A628 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBF692B722D7D81A00CEA5B3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -74,10 +149,37 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		BB3867FC22F09C080088A628 /* Lista Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				BB3867FD22F09C080088A628 /* Interface.storyboard */,
+				BB38680022F09C0B0088A628 /* Assets.xcassets */,
+				BB38680222F09C0B0088A628 /* Info.plist */,
+			);
+			path = "Lista Watch App";
+			sourceTree = "<group>";
+		};
+		BB38680B22F09C0B0088A628 /* Lista Watch App Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BB38682322F09F010088A628 /* ItemInterfaceController.swift */,
+				BB38680E22F09C0B0088A628 /* ExtensionDelegate.swift */,
+				BB38681022F09C0B0088A628 /* NotificationController.swift */,
+				BB122F1E22F1C88D005DE9DD /* Row.swift */,
+				BB38681222F09C0C0088A628 /* Assets.xcassets */,
+				BB38681422F09C0C0088A628 /* Info.plist */,
+				BB38681522F09C0C0088A628 /* PushNotificationPayload.apns */,
+				BB122F2522F1CDF2005DE9DD /* AddItemInterfaceController.swift */,
+			);
+			path = "Lista Watch App Extension";
+			sourceTree = "<group>";
+		};
 		BBF692B122D7D81A00CEA5B3 = {
 			isa = PBXGroup;
 			children = (
 				BBF692BC22D7D81A00CEA5B3 /* Lista */,
+				BB3867FC22F09C080088A628 /* Lista Watch App */,
+				BB38680B22F09C0B0088A628 /* Lista Watch App Extension */,
 				BBF692BB22D7D81A00CEA5B3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,6 +188,8 @@
 			isa = PBXGroup;
 			children = (
 				BBF692BA22D7D81A00CEA5B3 /* Lista.app */,
+				BB3867FB22F09C080088A628 /* Lista Watch App.app */,
+				BB38680722F09C0B0088A628 /* Lista Watch App Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,6 +210,7 @@
 				BBF692BD22D7D81A00CEA5B3 /* AppDelegate.swift */,
 				BBF692C722D7D81C00CEA5B3 /* Assets.xcassets */,
 				BBF692CC22D7D81C00CEA5B3 /* Info.plist */,
+				BBBA0A7822F1DABC00883D29 /* WatchSessionManager.swift */,
 			);
 			path = Lista;
 			sourceTree = "<group>";
@@ -132,6 +237,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		BB3867FA22F09C080088A628 /* Lista Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB38681F22F09C0C0088A628 /* Build configuration list for PBXNativeTarget "Lista Watch App" */;
+			buildPhases = (
+				BB3867F922F09C080088A628 /* Resources */,
+				BB38681E22F09C0C0088A628 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BB38680A22F09C0B0088A628 /* PBXTargetDependency */,
+			);
+			name = "Lista Watch App";
+			productName = "Lista Watch App";
+			productReference = BB3867FB22F09C080088A628 /* Lista Watch App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		BB38680622F09C0B0088A628 /* Lista Watch App Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB38681D22F09C0C0088A628 /* Build configuration list for PBXNativeTarget "Lista Watch App Extension" */;
+			buildPhases = (
+				BB38680322F09C0B0088A628 /* Sources */,
+				BB38680422F09C0B0088A628 /* Frameworks */,
+				BB38680522F09C0B0088A628 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Lista Watch App Extension";
+			productName = "Lista Watch App Extension";
+			productReference = BB38680722F09C0B0088A628 /* Lista Watch App Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 		BBF692B922D7D81A00CEA5B3 /* Lista */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BBF692CF22D7D81C00CEA5B3 /* Build configuration list for PBXNativeTarget "Lista" */;
@@ -139,10 +278,12 @@
 				BBF692B622D7D81A00CEA5B3 /* Sources */,
 				BBF692B722D7D81A00CEA5B3 /* Frameworks */,
 				BBF692B822D7D81A00CEA5B3 /* Resources */,
+				BB38682022F09C0C0088A628 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BB38681722F09C0C0088A628 /* PBXTargetDependency */,
 			);
 			name = Lista;
 			productName = Lista;
@@ -155,10 +296,16 @@
 		BBF692B222D7D81A00CEA5B3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1030;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Henri Loukonen";
 				TargetAttributes = {
+					BB3867FA22F09C080088A628 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					BB38680622F09C0B0088A628 = {
+						CreatedOnToolsVersion = 10.3;
+					};
 					BBF692B922D7D81A00CEA5B3 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -178,11 +325,30 @@
 			projectRoot = "";
 			targets = (
 				BBF692B922D7D81A00CEA5B3 /* Lista */,
+				BB3867FA22F09C080088A628 /* Lista Watch App */,
+				BB38680622F09C0B0088A628 /* Lista Watch App Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BB3867F922F09C080088A628 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB38680122F09C0B0088A628 /* Assets.xcassets in Resources */,
+				BB3867FF22F09C080088A628 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB38680522F09C0B0088A628 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB38681322F09C0C0088A628 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBF692B822D7D81A00CEA5B3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,6 +363,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		BB38680322F09C0B0088A628 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB122F2622F1CDF2005DE9DD /* AddItemInterfaceController.swift in Sources */,
+				BB122F1F22F1C88D005DE9DD /* Row.swift in Sources */,
+				BB38681122F09C0B0088A628 /* NotificationController.swift in Sources */,
+				BB38680F22F09C0B0088A628 /* ExtensionDelegate.swift in Sources */,
+				BB38682422F09F010088A628 /* ItemInterfaceController.swift in Sources */,
+				BB69B8F822F471F70068405F /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBF692B622D7D81A00CEA5B3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -209,6 +388,7 @@
 				BB02B16622E1F15E0065749B /* TagControl.swift in Sources */,
 				BBEF72BC22E0485A00B76A9C /* List+CoreDataProperties.swift in Sources */,
 				BB07EF2222E730EC009BFB20 /* AlertViewController.swift in Sources */,
+				BBBA0A7922F1DABC00883D29 /* WatchSessionManager.swift in Sources */,
 				BB0757CA22E6505100B85009 /* SettingsTableViewController.swift in Sources */,
 				BBF692BE22D7D81A00CEA5B3 /* AppDelegate.swift in Sources */,
 				BBF692E122D91E2C00CEA5B3 /* CoreDataManager.swift in Sources */,
@@ -218,7 +398,28 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		BB38680A22F09C0B0088A628 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB38680622F09C0B0088A628 /* Lista Watch App Extension */;
+			targetProxy = BB38680922F09C0B0088A628 /* PBXContainerItemProxy */;
+		};
+		BB38681722F09C0C0088A628 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB3867FA22F09C080088A628 /* Lista Watch App */;
+			targetProxy = BB38681622F09C0C0088A628 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		BB3867FD22F09C080088A628 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BB3867FE22F09C080088A628 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 		BBF692C122D7D81A00CEA5B3 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -238,6 +439,88 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		BB38681922F09C0C0088A628 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9N39D7WC7C;
+				IBSC_MODULE = Lista_Watch_App_Extension;
+				INFOPLIST_FILE = "Lista Watch App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.henriloukonen.Lista.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.3;
+			};
+			name = Debug;
+		};
+		BB38681A22F09C0C0088A628 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9N39D7WC7C;
+				IBSC_MODULE = Lista_Watch_App_Extension;
+				INFOPLIST_FILE = "Lista Watch App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.henriloukonen.Lista.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.3;
+			};
+			name = Release;
+		};
+		BB38681B22F09C0C0088A628 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9N39D7WC7C;
+				INFOPLIST_FILE = "Lista Watch App Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.henriloukonen.Lista.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.3;
+			};
+			name = Debug;
+		};
+		BB38681C22F09C0C0088A628 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9N39D7WC7C;
+				INFOPLIST_FILE = "Lista Watch App Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.henriloukonen.Lista.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.3;
+			};
+			name = Release;
+		};
 		BBF692CD22D7D81C00CEA5B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -393,6 +676,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BB38681D22F09C0C0088A628 /* Build configuration list for PBXNativeTarget "Lista Watch App Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB38681B22F09C0C0088A628 /* Debug */,
+				BB38681C22F09C0C0088A628 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB38681F22F09C0C0088A628 /* Build configuration list for PBXNativeTarget "Lista Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB38681922F09C0C0088A628 /* Debug */,
+				BB38681A22F09C0C0088A628 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BBF692B522D7D81A00CEA5B3 /* Build configuration list for PBXProject "Lista" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

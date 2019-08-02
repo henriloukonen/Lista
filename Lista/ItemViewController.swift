@@ -9,10 +9,12 @@
 import UIKit
 import CoreData
 
+
 class ItemViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var newItemTextField: UITextField!
     @IBOutlet var amountTextField: UITextField!
+    @IBOutlet var tags: TagControl!
     
     var oldName: String!
     var newName: String!
@@ -26,15 +28,14 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    let tags = TagControl()
     let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
     let amount: UIBarButtonItem = UIBarButtonItem(title: "Amount", style: .plain, target: self, action: #selector(amountActionButton))
     let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
     
-    
     override func viewDidLoad() {
         title = "Add Item"
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         
@@ -55,6 +56,7 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         }
         newItemTextField.inputAccessoryView = doneToolbar
         amountTextField.inputAccessoryView = doneToolbar
+    
     }
 
     
@@ -82,8 +84,12 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
  
     
     @IBAction func closeVC(_ sender: Any) {
-        navigationController?.popToRootViewController(animated: true)
-        dismiss(animated: true, completion: nil)
+        if passedItem != nil {
+            navigationController?.popToRootViewController(animated: true)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
+        
         newItemTextField.resignFirstResponder()
         amountTextField.resignFirstResponder()
     }
@@ -95,14 +101,18 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let text = newItemTextField.text, !text.isEmpty else { return }
         guard let amount = amountTextField.text, !text.isEmpty else { return }
+        
         newName = text
         _ = oldName
         amountOfItems = Int64(amount) ?? 0
-        
-        
-        if let tag = tags.currentlySelectedTag {
-            selectedTag = Int64(tag)
+        if passedItem == nil {
+            selectedTag = Int64(tags.currentlySelectedTag?.tag ?? 0)
         }
+        if tags.currentlySelectedTag != nil {
+            selectedTag = Int64(tags.currentlySelectedTag?.tag ?? 0)
+        }
+        _ = selectedTag
+        
     }
     @objc func doneButtonAction() {
         performSegue(withIdentifier: "unwindAddItemVC", sender: nil)
@@ -110,3 +120,4 @@ class ItemViewController: UIViewController, UITextFieldDelegate {
         amountTextField.resignFirstResponder()
     }
 }
+

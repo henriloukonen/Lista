@@ -8,22 +8,32 @@
 
 import UIKit
 import CoreData
+import WatchConnectivity
 
-class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
-    
+class ViewController: UIViewController, NSFetchedResultsControllerDelegate, WCSessionDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var isEmptyLabel: UILabel!
     @IBOutlet var noItemsView: UIView!
     @IBOutlet var deleteItems: UIBarButtonItem!
     
+    
     private var itemPredicate: NSPredicate?
     private var fetchedResultsController: NSFetchedResultsController<List>!
+    var session: WCSession?
+    var itemArray: [(String, Int64, Int64)] = []
     
     fileprivate let coreData = CoreDataManager(modelName: "Lista")
     lazy var managedContext = coreData.persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if WCSession.isSupported() {
+            session = WCSession.default
+            session?.delegate = self
+            session?.activate()
+            
+        }
         
         title = "Lista"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -34,6 +44,35 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         loadSavedItems()
     }
     
+    //MARK: - Watch connectivity stubs
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    func sessionDidBecomeInactive(_ session: WCSession) {}
+    func sessionDidDeactivate(_ session: WCSession) {}
+    
+    //MARK: - Pass items to the watch
+    func passPhoneContext() {
+        if let validSession = session {
+            let request = List.createFetchRequest()
+            do {
+                let items = try managedContext.fetch(request)
+                
+                for itemName in items as [List] {
+                    if !itemName.isDone {
+                        itemArray += [(itemName.item, itemName.amount, itemName.tag)]
+                        print(itemArray[0])
+                    }
+                }
+                
+                let infoToPass = ["items" : itemArray]
+                validSession.transferUserInfo(infoToPass)
+            } catch {
+                print("failed to fetch items")
+            }
+        }
+    }
+    
+    
+    //MARK: - Unwind from ItemViewController and add new item
     @IBAction func unwindFromAddItemVC(_ sender: UIStoryboardSegue) {
         if sender.source is ItemViewController {
             if let senderVC = sender.source as? ItemViewController {
@@ -46,6 +85,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         }
     }
     
+    //MARK: - Save and load items
     func saveNewItem(name: String, amount: Int64, tag: Int64) {
         let currentDate = Date()
         
@@ -60,7 +100,32 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         
         coreData.saveContext()
     }
-    func updateItem(oldName: String, newName: String, newAmount: Int64, newTag: Int64) {
+    func loadSavedItems() {
+        if fetchedResultsController == nil {
+            let request = List.createFetchRequest()
+            
+            let sortAllByTag = NSSortDescriptor(key: Entity.Attribute.tag, ascending: false)
+            let sortAllByDate = NSSortDescriptor(key: Entity.Attribute.date, ascending: true)
+            request.sortDescriptors = [sortAllByTag, sortAllByDate]
+            request.fetchBatchSize = 30
+            
+            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedContext, sectionNameKeyPath: Entity.Attribute.tag, cacheName: nil)
+            fetchedResultsController.delegate = self
+        }
+        fetchedResultsController.fetchRequest.predicate = itemPredicate
+        
+        do {
+            try fetchedResultsController.performFetch()
+            tableView.reloadData()
+        } catch {
+            print("fetch failed")
+        }
+        
+    }
+
+    
+    //MARK: - update item details
+    func updateItem(oldName: String, newName: String, newAmount: Int64, newTag: Int64?) {
         let fetchRequest = List.createFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "item == %@", oldName)
         
@@ -68,13 +133,15 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
             let item = try managedContext.fetch(fetchRequest)
             if newName     !=  oldName        { item[0].item   = newName }
             if newAmount   !=  item[0].amount { item[0].amount = newAmount }
-            if newTag      !=  item[0].tag    { item[0].tag    = newTag }
+            if newTag      !=  item[0].tag    { item[0].tag    = newTag! }
             
             coreData.saveContext()
         } catch {
             print(error)
         }
     }
+    
+    //MARK: - mark item as done
     func mark(itemName: String, done: Bool) {
         let fetchRequest = List.createFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "item == %@", itemName)
@@ -91,30 +158,9 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
             print(error)
         }
     }
-   
     
-    func loadSavedItems() {
-        if fetchedResultsController == nil {
-            let request = List.createFetchRequest()
-            
-            let sortAllByDate = NSSortDescriptor(key: Entity.Attribute.date, ascending: true)
-            request.sortDescriptors = [sortAllByDate]
-            request.fetchBatchSize = 30
-           
-            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
-            fetchedResultsController.delegate = self
-        }
-        fetchedResultsController.fetchRequest.predicate = itemPredicate
-        
-        do {
-            try fetchedResultsController.performFetch()
-            tableView.reloadData()
-        } catch {
-            print("fetch failed")
-        }
-    }
+    //MARK: - Delete done or every item
     @IBAction func editItems(_ sender: Any) {
-        
         let deleteAll = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         deleteAll.addAction(UIAlertAction(title: "Delete all", style: .destructive, handler: { action in
             self.deleteAllItems()
@@ -126,13 +172,13 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
         deleteAll.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(deleteAll, animated: true)
     }
+    
     func clearDoneItems() {
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "List")
         
         fetch.predicate = NSPredicate(format: "isDone == true")
         
         do {
-            tableView.beginUpdates()
             let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetch)
             batchDeleteRequest.resultType = .resultTypeObjectIDs
             
@@ -140,47 +186,50 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate {
             let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: result.result as! [NSManagedObjectID]]
             
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.managedContext])
-            tableView.endUpdates()
-            
-            let transition = CATransition()
-            transition.duration = 0.6
-            transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-            transition.type = .fade
-            transition.subtype = .fromTop
-            self.tableView.layer.add(transition, forKey: kCATransition)
-            
         } catch {
             fatalError("Failed to execute request: \(error)")
         }
     }
+    
     func deleteAllItems() {
         let confirmDelete = UIAlertController(title: "This action cannot be undone", message: nil, preferredStyle: .actionSheet)
-        confirmDelete.addAction(UIAlertAction(title: "Delete all", style: .destructive, handler: { action in
+        confirmDelete.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { action in
+            let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "List")
             
-            self.tableView.reloadData()
-            }))
+            do {
+                let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetch)
+                batchDeleteRequest.resultType = .resultTypeObjectIDs
+                
+                let result = try self.managedContext.execute(batchDeleteRequest) as! NSBatchDeleteResult
+                let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: result.result as! [NSManagedObjectID]]
+                
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.managedContext])
+            } catch {
+                fatalError("Failed to execute request: \(error)")
+            }
+        }))
         confirmDelete.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(confirmDelete, animated: true)
     }
 }
 
-//MARK: - TableViews
+//MARK: - TableView DataSource extension
 extension ViewController: UITableViewDataSource {
-//    func numberOfRowsSections(in tableView: UITableView) -> Int {
-//
-//
-//        return sections ?? 0
-//    }
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return fetchedResultsController.sections![section].name
-//
-//    }
+     func numberOfSections(in tableView: UITableView) -> Int {
+        
+        let sectionInfo = fetchedResultsController.sections?.count
+        tableView.backgroundView = (sectionInfo==0) ? noItemsView : nil
+        deleteItems.isEnabled = (sectionInfo==0) ? false : true
+        
+        return sectionInfo ?? 0
+    }
+        func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         let rows = sectionInfo.numberOfObjects
-        tableView.backgroundView = (rows==0) ? noItemsView : nil
-        deleteItems.isEnabled = (rows==0) ? false : true
         return rows
     }
     
@@ -241,41 +290,49 @@ extension ViewController: UITableViewDataSource {
             return actions
         }
     }
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-//        let index = IndexSet(integer: sectionIndex)
-//
-//        switch type {
-//        case .delete:
-//
-//            coreData.saveContext()
-//            tableView.deleteSections(index, with: .left)
-//            print("\(index) deleted")
-//
-//        case .insert:
-//            coreData.saveContext()
-//            tableView.insertSections(index, with: .fade)
-//            print("\(index) added")
-//        default:
-//            break
-//        }
-//    }
+    
+    //MARK: - FetchedResultControllers
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let index = IndexSet(integer: sectionIndex)
+
+        switch type {
+        case .delete:
+            tableView.deleteSections(index, with: .left)
+        case .insert:
+            tableView.insertSections(index, with: .bottom)
+        case .update:
+            tableView.reloadSections(index, with: .fade)
+        default:
+            break
+        }
+    }
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .delete:
             if let indexPath = indexPath {
                 tableView.deleteRows(at: [indexPath], with: .left)
             }
-            print("deleted")
         case .insert:
             if let indexPath = newIndexPath {
                 tableView.insertRows(at: [indexPath], with: .bottom)
             }
-            print("added")
         case .update:
             if let indexPath = indexPath {
                 tableView.reloadRows(at: [indexPath], with: .fade)
-               
+            }
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .fade)
             }
         default:
             break
@@ -283,7 +340,7 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-//MARK: -  TableView delegates
+//MARK: -  TableView delegates extension
 extension ViewController: UITableViewDelegate {
 
 }

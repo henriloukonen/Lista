@@ -180,6 +180,24 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i0c-6Z-xbI" id="5cx-hn-RbI">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Touch ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="za3-i3-iVt">
+                                                    <rect key="frame" x="16" y="10.999999999999998" width="102" height="20.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Nif-K5-75I">
+                                                    <rect key="frame" x="310" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="za3-i3-iVt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5cx-hn-RbI" secondAttribute="top" constant="11" id="Btj-Hl-xue"/>
+                                                <constraint firstItem="za3-i3-iVt" firstAttribute="leading" secondItem="5cx-hn-RbI" secondAttribute="leading" constant="16" id="IBf-oO-30I"/>
+                                                <constraint firstItem="Nif-K5-75I" firstAttribute="centerY" secondItem="5cx-hn-RbI" secondAttribute="centerY" id="S2j-wX-eyl"/>
+                                                <constraint firstAttribute="trailing" secondItem="Nif-K5-75I" secondAttribute="trailing" constant="16" id="kVV-dc-sML"/>
+                                                <constraint firstAttribute="bottom" secondItem="za3-i3-iVt" secondAttribute="bottom" constant="12.333333333333336" id="rhe-tH-qKg"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -307,7 +325,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmp-Ak-2rW">
-                                <rect key="frame" x="16" y="216" width="26.666666666666671" height="19.666666666666657"/>
+                                <rect key="frame" x="15.999999999999998" y="216" width="26.333333333333329" height="19.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -325,7 +343,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="TXZ-Kh-uit" customClass="TagControl" customModule="Lista" customModuleProvider="target">
-                                <rect key="frame" x="16" y="243" width="343" height="40"/>
+                                <rect key="frame" x="16" y="242.66666666666663" width="343" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="LbM-uJ-d15"/>
                                 </constraints>
@@ -354,7 +372,7 @@
                         <viewLayoutGuide key="safeArea" id="KEV-oR-C7Y"/>
                     </view>
                     <navigationItem key="navigationItem" id="odF-gJ-zHF">
-                        <barButtonItem key="leftBarButtonItem" title="Close" id="0kN-wT-1ba">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="0kN-wT-1ba">
                             <connections>
                                 <action selector="closeVC:" destination="yr4-jc-gGi" id="q5d-Cl-d4C"/>
                             </connections>
@@ -363,6 +381,7 @@
                     <connections>
                         <outlet property="amountTextField" destination="gSn-Na-YsW" id="eHS-9p-6rL"/>
                         <outlet property="newItemTextField" destination="Yho-ug-2kg" id="OWO-XH-QaT"/>
+                        <outlet property="tags" destination="TXZ-Kh-uit" id="CKK-IU-0B2"/>
                         <segue destination="1Qj-my-beM" kind="unwind" identifier="unwindAddItemVC" unwindAction="unwindFromAddItemVC:" id="8u0-yh-2CT"/>
                     </connections>
                 </viewController>

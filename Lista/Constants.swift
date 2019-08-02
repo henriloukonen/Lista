@@ -23,6 +23,8 @@ enum Entity {
 }
 
 enum Color {
+    static var tagColors: [UIColor] = [Color.clear, Color.blue, Color.cyan, Color.purple, Color.lime, Color.orange]
+    static let clear     = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
     static let lime      = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
     static let blue      = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
     static let purple    = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)

@@ -17,7 +17,8 @@ class ItemTableViewCell: UITableViewCell {
     func configureCell(from entity: List) {
         itemLabel?.text = entity.item
         amountLabel?.text = (entity.amount<1) ? nil : String(entity.amount)
-        tagView.backgroundColor = tags.tagsArray[Int(entity.tag)]
+    
+        tagView.backgroundColor = tags.tagColors[Int(entity.tag)]
         
         //Style the cell
         if entity.isDone {
@@ -27,13 +28,13 @@ class ItemTableViewCell: UITableViewCell {
             itemLabel?.transform = CGAffineTransform(translationX: 55, y: 0)
             itemLabel?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             amountLabel?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-            tagView.alpha = 0.4
+            tagView?.alpha = 0.4
             _ = backgroundColor = #colorLiteral(red: 0.9780562804, green: 0.9780562804, blue: 0.9780562804, alpha: 1)
         } else {
             itemLabel?.textColor = nil
             amountLabel?.textColor = nil
             itemLabel?.alpha = 1
-            tagView.alpha = 1
+            tagView?.alpha = 0.8
             itemLabel?.transform = .identity
             itemLabel?.transform = .identity
             amountLabel?.transform = .identity
@@ -41,9 +42,9 @@ class ItemTableViewCell: UITableViewCell {
         }
         
         _ = SeparatorStyle.none
-//        _ = layer.borderWidth = 2
+        _ = layer.borderWidth = 2
         _ = layer.cornerRadius = 1
-//        _ = layer.borderColor = UIColor.white.cgColor
+        _ = layer.borderColor = UIColor.white.cgColor
     }
 //    func animateMarkAsDone(using item: Bool) {
 //        if item {

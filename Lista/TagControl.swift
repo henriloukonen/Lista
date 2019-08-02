@@ -12,8 +12,7 @@ class TagControl: UIStackView {
 
     var lastSelectedTag: UIButton?
     var currentlySelectedTag: UIButton?
-    
-    lazy var tagsArray: [UIColor] = [Color.clear, Color.blue, Color.cyan, Color.purple, Color.lime, Color.orange]
+    lazy var tagColors: [UIColor] = [Color.clear, Color.blue, Color.cyan, Color.purple, Color.lime, Color.orange]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,11 +25,19 @@ class TagControl: UIStackView {
     }
     
     private func setupTags() {
-        
-        for i in 1..<tagsArray.count {
-            let tag = UIButton()
+       
+        for i in 0..<tagColors.count {
             
-            tag.backgroundColor = tagsArray[i]
+            let tag = UIButton()
+            if i == 0 {
+                tag.backgroundColor = tagColors[0]
+                tag.layer.borderColor = Color.lightGray.cgColor
+                tag.layer.borderWidth = 1
+                tag.setTitle("X", for: .normal)
+                tag.setTitleColor(UIColor.black, for: .normal)
+            } else {
+                tag.backgroundColor = tagColors[i]
+            }
             tag.tag = i
             tag.layer.cornerRadius = 7
             tag.alpha = 0.7
@@ -41,16 +48,19 @@ class TagControl: UIStackView {
             
             addArrangedSubview(tag)
         }
+        
     }
 
     
     @objc func tagButtonTapped(button: UIButton) {
-        
         currentlySelectedTag = button
         
         let hapticFeedback = UIImpactFeedbackGenerator(style: .light)
         hapticFeedback.impactOccurred()
-        print("button \(button.tag) is selected")
+        
+        if currentlySelectedTag?.tag == 0 {
+            lastSelectedTag?.isSelected = false
+        }
         
         if let selectedTag = lastSelectedTag { // if lastSelectedTag contains a button,
             selectedTag.isSelected = false     // set it to false
@@ -66,9 +76,8 @@ class TagControl: UIStackView {
             
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 3, options: [.curveEaseOut], animations: {
                 button.alpha = 1
-//                button.transform = CGAffineTransform(translationX: 1, y: -7)
                 button.transform = CGAffineTransform(scaleX: 1, y: 1)
             })
-        button.isSelected = true
+        currentlySelectedTag?.isSelected = true
     }
 }
