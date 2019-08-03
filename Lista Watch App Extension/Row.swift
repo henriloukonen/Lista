@@ -9,8 +9,6 @@
 import WatchKit
 
 class Row: NSObject {
-
-    @IBOutlet var tag: WKInterfaceSeparator!
     @IBOutlet var rowGroup: WKInterfaceGroup!
     @IBOutlet var amount: WKInterfaceLabel!
     @IBOutlet var item: WKInterfaceLabel!

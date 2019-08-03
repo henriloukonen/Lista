@@ -20,7 +20,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, WCSe
     private var itemPredicate: NSPredicate?
     private var fetchedResultsController: NSFetchedResultsController<List>!
     var session: WCSession?
-    var itemArray: [(String, Int64, Int64)] = []
+    var itemDict = [String : [Int64]]()
     
     fileprivate let coreData = CoreDataManager(modelName: "Lista")
     lazy var managedContext = coreData.persistentContainer.viewContext
@@ -32,7 +32,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, WCSe
             session = WCSession.default
             session?.delegate = self
             session?.activate()
-            
+            passPhoneContext()
         }
         
         title = "Lista"
@@ -56,17 +56,16 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, WCSe
             do {
                 let items = try managedContext.fetch(request)
                 
-                for itemName in items as [List] {
-                    if !itemName.isDone {
-                        itemArray += [(itemName.item, itemName.amount, itemName.tag)]
-                        print(itemArray[0])
+                for itemDetail in items as [List] {
+                    if !itemDetail.isDone {
+                        itemDict[itemDetail.item] = [itemDetail.amount, itemDetail.tag]
                     }
                 }
                 
-                let infoToPass = ["items" : itemArray]
+                let infoToPass = ["items" : itemDict]
                 validSession.transferUserInfo(infoToPass)
             } catch {
-                print("failed to fetch items")
+                print("failed to pass context")
             }
         }
     }
@@ -122,7 +121,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, WCSe
         }
         
     }
-
+    
     
     //MARK: - update item details
     func updateItem(oldName: String, newName: String, newAmount: Int64, newTag: Int64?) {
@@ -215,7 +214,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, WCSe
 
 //MARK: - TableView DataSource extension
 extension ViewController: UITableViewDataSource {
-     func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         let sectionInfo = fetchedResultsController.sections?.count
         tableView.backgroundView = (sectionInfo==0) ? noItemsView : nil
@@ -223,10 +222,10 @@ extension ViewController: UITableViewDataSource {
         
         return sectionInfo ?? 0
     }
-        func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return nil
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         let rows = sectionInfo.numberOfObjects
@@ -238,10 +237,10 @@ extension ViewController: UITableViewDataSource {
         let index = fetchedResultsController.object(at: indexPath)
         
         cell.configureCell(from: index)
-
+        
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let markAsDone = UIContextualAction(style: .normal, title: "Done") { (contextualAction, view, boolValue) in
             
@@ -257,9 +256,9 @@ extension ViewController: UITableViewDataSource {
         
         return action
     }
-
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-       let item = self.fetchedResultsController.object(at: indexPath)
+        let item = self.fetchedResultsController.object(at: indexPath)
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
             
             self.managedContext.delete(item)
@@ -268,19 +267,19 @@ extension ViewController: UITableViewDataSource {
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit") { (contextualAction, view, boolValue) in
-                let editVC = self.storyboard?.instantiateViewController(withIdentifier: "itemVC") as! ItemViewController
-                editVC.passedItem = item
-//                            let transition = CATransition()
-//                            transition.duration = 0.5
-//                            transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-//                            transition.type = .push
-//                            transition.subtype = .fromTop
-//                            self.navigationController?.view.layer.add(transition, forKey: kCATransition)
-                self.navigationController?.pushViewController(editVC, animated: true)
+            let editVC = self.storyboard?.instantiateViewController(withIdentifier: "itemVC") as! ItemViewController
+            editVC.passedItem = item
+            //                            let transition = CATransition()
+            //                            transition.duration = 0.5
+            //                            transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            //                            transition.type = .push
+            //                            transition.subtype = .fromTop
+            //                            self.navigationController?.view.layer.add(transition, forKey: kCATransition)
+            self.navigationController?.pushViewController(editVC, animated: true)
             
             boolValue(true)
         }
-            edit.backgroundColor = Color.cyan
+        edit.backgroundColor = Color.cyan
         
         if item.isDone {
             let actions = UISwipeActionsConfiguration(actions: [delete])
@@ -301,7 +300,7 @@ extension ViewController: UITableViewDataSource {
     }
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         let index = IndexSet(integer: sectionIndex)
-
+        
         switch type {
         case .delete:
             tableView.deleteSections(index, with: .left)
@@ -342,6 +341,6 @@ extension ViewController: UITableViewDataSource {
 
 //MARK: -  TableView delegates extension
 extension ViewController: UITableViewDelegate {
-
+    
 }
 

@@ -12,7 +12,7 @@ class TagControl: UIStackView {
 
     var lastSelectedTag: UIButton?
     var currentlySelectedTag: UIButton?
-    lazy var tagColors: [UIColor] = [Color.clear, Color.blue, Color.cyan, Color.purple, Color.lime, Color.orange]
+//    lazy var tagColors: [UIColor] = [Color.clear, Color.blue, Color.cyan, Color.purple, Color.lime, Color.orange]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,17 +26,17 @@ class TagControl: UIStackView {
     
     private func setupTags() {
        
-        for i in 0..<tagColors.count {
+        for i in 0..<Color.tagColors.count {
             
             let tag = UIButton()
             if i == 0 {
-                tag.backgroundColor = tagColors[0]
+                tag.backgroundColor = Color.tagColors[0]
                 tag.layer.borderColor = Color.lightGray.cgColor
                 tag.layer.borderWidth = 1
                 tag.setTitle("X", for: .normal)
                 tag.setTitleColor(UIColor.black, for: .normal)
             } else {
-                tag.backgroundColor = tagColors[i]
+                tag.backgroundColor = Color.tagColors[i]
             }
             tag.tag = i
             tag.layer.cornerRadius = 7

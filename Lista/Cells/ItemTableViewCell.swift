@@ -12,13 +12,13 @@ class ItemTableViewCell: UITableViewCell {
     @IBOutlet var amountLabel: UILabel!
     @IBOutlet var itemLabel: UILabel!
     @IBOutlet var tagView: UIView!
-    let tags = TagControl()
+  
     
     func configureCell(from entity: List) {
         itemLabel?.text = entity.item
         amountLabel?.text = (entity.amount<1) ? nil : String(entity.amount)
     
-        tagView.backgroundColor = tags.tagColors[Int(entity.tag)]
+        tagView.backgroundColor = Color.tagColors[Int(entity.tag)]
         
         //Style the cell
         if entity.isDone {

@@ -20,7 +20,7 @@
 		BB38681322F09C0C0088A628 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB38681222F09C0C0088A628 /* Assets.xcassets */; };
 		BB38681822F09C0C0088A628 /* Lista Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = BB3867FB22F09C080088A628 /* Lista Watch App.app */; };
 		BB38682422F09F010088A628 /* ItemInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38682322F09F010088A628 /* ItemInterfaceController.swift */; };
-		BB69B8F822F471F70068405F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692D622D8756800CEA5B3 /* Constants.swift */; };
+		BB69B8FA22F4CACA0068405F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF692D622D8756800CEA5B3 /* Constants.swift */; };
 		BBBA0A7922F1DABC00883D29 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA0A7822F1DABC00883D29 /* WatchSessionManager.swift */; };
 		BBEF72BB22E0485A00B76A9C /* List+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF72B922E0485A00B76A9C /* List+CoreDataClass.swift */; };
 		BBEF72BC22E0485A00B76A9C /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEF72BA22E0485A00B76A9C /* List+CoreDataProperties.swift */; };
@@ -372,7 +372,7 @@
 				BB38681122F09C0B0088A628 /* NotificationController.swift in Sources */,
 				BB38680F22F09C0B0088A628 /* ExtensionDelegate.swift in Sources */,
 				BB38682422F09F010088A628 /* ItemInterfaceController.swift in Sources */,
-				BB69B8F822F471F70068405F /* Constants.swift in Sources */,
+				BB69B8FA22F4CACA0068405F /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
